@@ -9,39 +9,45 @@ from App.database import db
 
 auth_views = Blueprint('auth_views', __name__, template_folder='../templates')
 
+
 @auth_views.route('/login', methods=['GET'])
 def get_login_page():
     return render_template('login.html')
-    
+
+
 @auth_views.route('/login', methods=['POST'])
 def login_action():
-    email = request.form.get('email')           #To be linked to login button
-    password = request.form.get('password')     #To be linked to login button
+    email = request.form.get('email')  # To be linked to login button
+    password = request.form.get('password')  # To be linked to login button
     response = login_user(email, password)
     if not response:
-        flash('Bad email or password given'), 401 
-    return response       
+        flash('Bad email or password given'), 401
+    return response
+
 
 def login_user(email, password):
-    admin_user=db.session.query(Admin).filter(Admin.email == email).first()
+    admin_user = db.session.query(Admin).filter(Admin.email == email).first()
     if admin_user and admin_user.check_password(password):
-        response = make_response(redirect(url_for('admin_views.get_upload_page')))    
+        response = make_response(
+            redirect(url_for('admin_views.get_upload_page')))
         token = create_access_token(identity=email)
         response.set_cookie('access_token', token)
         return response
     else:
         user = db.session.query(Staff).filter(Staff.email == email).first()
         if user and user.check_password(password):
-            response = make_response(redirect(url_for('staff_views.get_calendar_page')))
+            response = make_response(
+                redirect(url_for('staff_views.get_calendar_page')))
             token = create_access_token(identity=email)
             response.set_cookie('access_token', token)
             return response
     return jsonify(message="Invalid username or password"), 401
 
+
 @auth_views.route('/logout', methods=['GET'])
 @jwt_required()
 def logout():
-    email=get_jwt_identity()
+    email = get_jwt_identity()
     print(email)
     logout_user()
     return render_template('login.html')

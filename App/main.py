@@ -21,9 +21,11 @@ from App.config import config
 
 from App.views import views
 
+
 def add_views(app):
     for view in views:
         app.register_blueprint(view)
+
 
 def configure_app(app, config, overrides):
     for key, value in config.items():
@@ -32,6 +34,7 @@ def configure_app(app, config, overrides):
         else:
             app.config[key] = config[key]
 
+
 def create_app(config_overrides={}):
     app = Flask(__name__, static_url_path='/static')
     configure_app(app, config, config_overrides)
@@ -39,12 +42,14 @@ def create_app(config_overrides={}):
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.config['SEVER_NAME'] = '0.0.0.0'
     app.config['PREFERRED_URL_SCHEME'] = 'https'
-    app.config['UPLOAD_FOLDER'] = 'App/uploads'  # Configure upload folder (adjust as needed)
+    # Configure upload folder (adjust as needed)
+    app.config['UPLOAD_FOLDER'] = 'App/uploads'
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
     app.config['MAIL_USERNAME'] = 'assessment.scheduler.emails@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'mygl qlni lqrz naxm' #'urbs kwoy tvlm zowc' # App Password used 
-    app.config['MAIL_USE_TLS'] = True 
+    # 'urbs kwoy tvlm zowc' # App Password used
+    app.config['MAIL_PASSWORD'] = 'mygl qlni lqrz naxm'
+    app.config['MAIL_USE_TLS'] = True
     # app.config['MAIL_USE_SSL'] = False
     app.config['MAIL_DEFAULT_SENDER'] = 'assessment.scheduler.emails@gmail.com'
     app.config['JWT_ACCESS_COOKIE_NAME'] = 'access_token'
