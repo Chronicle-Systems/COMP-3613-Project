@@ -406,7 +406,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Updated" id="taKo81K4qv3iZlRPrnIa">
-    <mxGraphModel dx="8923" dy="4327" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#D5E8D4" math="0" shadow="1">
+    <mxGraphModel dx="5312" dy="1994" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#D5E8D4" math="0" shadow="1">
       <root>
         <mxCell id="wY9a074QrQh7qfgXFha0-0" />
         <mxCell id="wY9a074QrQh7qfgXFha0-1" parent="wY9a074QrQh7qfgXFha0-0" />
@@ -520,7 +520,7 @@
             <mxPoint y="-2" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="YGE1N1M3SMfuIpi-Z5yz-0" value="felfme" style="swimlane;startSize=0;fontFamily=Courier New;fontSize=12;fontColor=default;fontStyle=1;labelBorderColor=none;labelBackgroundColor=none;swimlaneFillColor=#95dfbf;fillColor=#66ffbd;fillStyle=auto;" vertex="1" parent="wY9a074QrQh7qfgXFha0-1">
+        <mxCell id="YGE1N1M3SMfuIpi-Z5yz-0" value="" style="swimlane;startSize=0;fontFamily=Courier New;fontSize=12;fontColor=default;fontStyle=1;labelBorderColor=none;labelBackgroundColor=none;swimlaneFillColor=#95dfbf;fillColor=#66ffbd;fillStyle=auto;" vertex="1" parent="wY9a074QrQh7qfgXFha0-1">
           <mxGeometry x="-980" y="-810" width="2480" height="1670" as="geometry" />
         </mxCell>
         <mxCell id="wY9a074QrQh7qfgXFha0-24" value="" style="edgeStyle=orthogonalEdgeStyle;shape=connector;curved=1;rounded=1;orthogonalLoop=1;jettySize=auto;strokeColor=#E07A5F;align=center;verticalAlign=middle;fontFamily=Courier New;fontSize=12;fontColor=default;labelBackgroundColor=none;startSize=24;endArrow=diamondThin;endFill=1;endSize=24;fontStyle=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;textShadow=1;labelBorderColor=none;" parent="YGE1N1M3SMfuIpi-Z5yz-0" source="wY9a074QrQh7qfgXFha0-32" target="wY9a074QrQh7qfgXFha0-142" edge="1">
@@ -1021,7 +1021,7 @@
             <mxPoint x="8" y="-18" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="wY9a074QrQh7qfgXFha0-168" value="&lt;&lt;Model&gt;&gt;&#xa;Role" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;fillColor=#F2CC8F;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontFamily=Courier New;fontSize=12;labelBackgroundColor=none;rounded=1;shadow=1;glass=0;swimlaneFillColor=default;strokeColor=#E07A5F;fillStyle=solid;fontColor=#393C56;textShadow=1;labelBorderColor=none;whiteSpace=wrap;" parent="YGE1N1M3SMfuIpi-Z5yz-0" vertex="1">
+        <mxCell id="wY9a074QrQh7qfgXFha0-168" value="&lt;&lt;Enumeration&gt;&gt;&#xa;Role" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=40;fillColor=#F2CC8F;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fontFamily=Courier New;fontSize=12;labelBackgroundColor=none;rounded=1;shadow=1;glass=0;swimlaneFillColor=default;strokeColor=#E07A5F;fillStyle=solid;fontColor=#393C56;textShadow=1;labelBorderColor=none;whiteSpace=wrap;" parent="YGE1N1M3SMfuIpi-Z5yz-0" vertex="1">
           <mxGeometry x="842.5" y="218" width="280" height="222" as="geometry" />
         </mxCell>
         <mxCell id="wY9a074QrQh7qfgXFha0-169" value="PTINSTRUCT = &quot;Part-Time Instructor&quot;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontFamily=Courier New;fontSize=12;fontColor=#393C56;labelBackgroundColor=none;fontStyle=1;rounded=1;textShadow=1;labelBorderColor=none;whiteSpace=wrap;" parent="wY9a074QrQh7qfgXFha0-168" vertex="1">
