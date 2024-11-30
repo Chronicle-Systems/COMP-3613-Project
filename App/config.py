@@ -3,16 +3,19 @@ import importlib
 from datetime import timedelta
 
 # must be updated to inlude addtional secrets/ api keys & use a gitignored custom-config file instad
+
+
 def load_config():
     config = {'ENV': os.environ.get('ENV', 'DEVELOPMENT')}
     delta = 7
     if config['ENV'] == "DEVELOPMENT":
         from .default_config import JWT_ACCESS_TOKEN_EXPIRES, SQLALCHEMY_DATABASE_URI, SECRET_KEY
-        config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI 
+        config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
         config['SECRET_KEY'] = SECRET_KEY
         delta = JWT_ACCESS_TOKEN_EXPIRES
     else:
-        config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
+        config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+            'SQLALCHEMY_DATABASE_URI')
         config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
         config['DEBUG'] = config['ENV'].upper() != 'PRODUCTION'
 
@@ -28,8 +31,9 @@ def load_config():
     config['MAIL_SERVER'] = 'smtp.gmail.com'
     config['MAIL_PORT'] = 465
     config['MAIL_USERNAME'] = 'assessment.scheduler.emails@gmail.com'
-    config['MAIL_PASSWORD'] = 'mygl qlni lqrz naxm' # App Password used 
-    config['MAIL_USE_TLS'] = True 
+    config['MAIL_PASSWORD'] = 'mygl qlni lqrz naxm'  # App Password used
+    config['MAIL_USE_TLS'] = True
     return config
+
 
 config = load_config()

@@ -23,8 +23,8 @@ class Staff(User,UserMixin):
 
   def __init__(self, first_name, last_name, id, global_role, email, password):
     super().__init__(id, password, email)
-    self.fName = first_name
-    self.lName = last_name
+    self.first_name = first_name
+    self.last_name = last_name
     self.global_role = global_role
 
     # assign courses based on role
@@ -60,8 +60,8 @@ class Staff(User,UserMixin):
   def to_json(self):
     return {
         "staff_ID": self.id,
-        "firstname": self.first_name,
-        "lastname": self.last_name,
+        "first_name": self.first_name,
+        "last_name": self.last_name,
         "global_role": self.global_role.value,
         "email": self.email,
         "coursesNum": self.cNum,
@@ -79,3 +79,5 @@ class Staff(User,UserMixin):
   def login(self):
     return flask_login.login_user(self)
 
+    def login(self):
+        return flask_login.login_user(self)

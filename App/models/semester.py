@@ -1,5 +1,6 @@
 from App.database import db
 
+
 class Semester(db.Model):
     __tablename__='semester'
 
@@ -21,6 +22,7 @@ def __str__(self):
 
 def __repr__(self):
     return f"<Semester (ID={self.id}, Start Date='{self.start_date}', End Date='{self.end_date}')>"
+
 
 def to_json(self):
     return {

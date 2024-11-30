@@ -1,7 +1,8 @@
 from App.database import db
 
+
 class Course(db.Model):
-  __tablename__ = 'course'
+    __tablename__ = 'course'
 
   id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
   code = db.Column(db.String(9), primary_key=True, unique=True)
