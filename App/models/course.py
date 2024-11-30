@@ -3,36 +3,41 @@ from App.database import db
 class Course(db.Model):
   __tablename__ = 'course'
 
-  courseCode = db.Column(db.String(9), primary_key=True)
-  courseTitle = db.Column(db.String(120), nullable=False)
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+  code = db.Column(db.String(9), primary_key=True, unique=True)
+  name = db.Column(db.String(120), nullable=False)
   description = db.Column(db.String(1024), nullable=False)
+  credits = db.Column(db.Integer, nullable=False)
   level = db.Column(db.Integer, nullable=False)
-  semester = db.Column(db.Integer, nullable=False)
-  aNum = db.Column(db.Integer, nullable=False, default=0)
-  # creates reverse relationship from Course back to Assessment to access assessments for a specific course
-  # assessmentsAssigned = db.relationship('assessment', backref=db.backref('assessment', lazy='joined'))
+  offerings = db.reationship('CourseOfferings', backref='course', lazy='dynamic')
 
-  def __init__(self, courseCode, courseTitle, description, level, semester, aNum):
-    self.courseCode = courseCode
-    self.courseTitle = courseTitle
+  def __init__(self, code, name, description, credits, level):
+    self.code = code
+    self.name = name
     self.description = description
+    self.credits = credits
     self.level = level
-    self.semester = semester
-    self.aNum = aNum
+
+  def __str__(self):
+    return f"Course (ID={self.id}, Code={self.code}, Name={self.name})"
+
+  def __repr__(self):
+    return f"<Course (ID={self.id}, Code='{self.code}', Name='{self.name}')>"
 
   def to_json(self):
     return {
-      "courseCode" : self.courseCode,
-      "courseTitle" : self.courseTitle,
-      "description" : self.description,
-      "level" : self.level,
-      "semester" : self.semester,
-      "aNum" : self.aNum,
+      "id": self.id,
+      "code": self.code,
+      "name": self.name,
+      "description": self.description,
+      "credits": self.credits,
+      "level": self.level,
+      "offerings": [offering.to_json() for offering in self.offerings],  # include offerings in JSON
     }
 
-  #Add new Course
-  def addCourse(courseCode, courseTitle, description, level, semester, aNum):
-    newCourse = Course(courseCode, courseTitle, description, level, semester, aNum)
-    db.session.add(newCourse)  #add to db
+  # add new Course
+  def addCourse(code, name, description, credits, level):
+    newCourse = Course(code, name, description, credits, level)
+    db.session.add(newCourse)
     db.session.commit()
     return newCourse
