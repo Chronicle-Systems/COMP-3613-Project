@@ -1,13 +1,13 @@
 from App.database import db
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
-from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     __abstract__ = True
 
-    u_ID = db.Column(db.Integer, unique=True, primary_key=True)  
+    u_ID = db.Column(db.Integer, unique=True, primary_key=True)
+    public_ID = db.Column(db.Integer, unique=True, nullable=False) 
     password = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique = True)
 
@@ -30,6 +30,9 @@ class User(db.Model, UserMixin):
             "password": self.password,
             "email":self.email
         }
-        
+    
     def __str__(self):
         return f"Staff(id={self.u_ID}, email={self.email})"
+    
+    def __repr__(self):
+        return f"<User (u_ID={self.u_ID}, email='{self.email}')>"
