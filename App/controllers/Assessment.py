@@ -1,21 +1,21 @@
-from App.models import Assessment, StaffObserver
+from App.models import CourseAssessment, StaffObserver
 from App.database import db
 from datetime import date, time
 
-def create_assessment(data):
-    new_assessment = Assessment(**data)
+def create_assessment(course_code, a_ID, start_date, end_date, start_time, end_time, clash_detected):
+    new_assessment = CourseAssessment(course_code, a_ID, start_date, end_date, start_time, end_time, clash_detected)
     db.session.add(new_assessment)
     db.session.commit()
     return new_assessment
 
 def detect_clash(assessment):
-    existing_assessments = Assessment.query.filter(
-        Assessment.start_date <= assessment.end_date,
-        Assessment.end_date >= assessment.start_date,
-        Assessment.a_ID != assessment.a_ID
+    existing_assessments = CourseAssessment.query.filter(
+        CourseAssessment.start_date <= assessment.end_date,
+        CourseAssessment.end_date >= assessment.start_date,
+        CourseAssessment.a_ID != assessment.a_ID
     ).all()
     for existing in existing_assessments:
-        if existing.courseCode == assessment.courseCode:
+        if existing.course_code == assessment.course_code:
             return True
     return False
 
