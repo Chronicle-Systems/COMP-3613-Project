@@ -23,3 +23,17 @@ def approve(assessment):
     assessment.status = 'Approved'
     db.session.commit()
 
+def reject(assessment):
+    assessment.status = 'Rejected'
+    db.session.commit()
+    notify_staff(assessment, None)
+
+def notify_staff(assessment, clash):
+    StaffObserver.notify(assessment, clash)
+
+def reschedule(assessment, start_date, end_date, start_time, end_time):
+    assessment.start_date = start_date
+    assessment.end_date = end_date
+    assessment.start_time = start_time
+    assessment.end_time = end_time
+    db.session.commit()
