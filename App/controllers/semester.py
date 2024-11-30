@@ -1,10 +1,13 @@
-from App.models import Semester
 from App.database import db
+from App.models import Semester
 
-
-def add_sem(startDate, endDate, semNum, maxAssessments):
-    new_sem = Semester(startDate=startDate, endDate=endDate,
-                       semNum=semNum, maxAssessments=maxAssessments)
-    db.session.add(new_sem)
+def create_semester(start_date, end_date, semester_number, max_assessments):
+    semester = Semester(
+        start_date=start_date,
+        end_date=end_date,
+        semester_number=semester_number,
+        max_assessments=max_assessments
+    )
+    db.session.add(semester)
     db.session.commit()
-    return new_sem
+    return semester

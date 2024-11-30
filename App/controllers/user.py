@@ -1,31 +1,29 @@
-from App.models import User, Admin, Staff
+from App.database import db
+from App.models import Admin, Staff
 
-
-def validate_Staff(email, password):
+def validate_staff(email, password):
     staff = Staff.query.filter_by(email=email).first()
-    for s in staff:
-        if s and s.check_password(password):
-            return s
+    if staff and staff.check_password(password):
+        return staff
     return None
 
-
-def validate_Admin(email, password):
+def validate_admin(email, password):
     admin = Admin.query.filter_by(email=email).first()
     if admin and admin.check_password(password):
         return admin
     return None
 
-
 def get_user(email, password):
-    user = validate_Staff(email, password)
-    if user != None:
+    user = validate_staff(email, password)
+    if user:
         return user
-    user = validate_Admin(email, password)
-    if user != None:
+    user = validate_admin(email, password)
+    if user:
         return user
     return None
 
-
 def get_uid(email):
     user = Staff.query.filter_by(email=email).first()
-    return user.u_ID
+    if user:
+        return user.u_id
+    return None

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for
 from App.models import Staff, Admin
-from App.controllers.admin import login_admin
+from App.controllers.login import login_admin
 from App.controllers.staff import login_staff
 from App.database import db
 
