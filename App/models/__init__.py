@@ -6,5 +6,5 @@ from .programme import *
 from .assessment import *
 from .courseStaff import *
 from .courseAssessment import *
-from .courseProgramme import *
+from .programmeCourse import *
 from .semester import *
