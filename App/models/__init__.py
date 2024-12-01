@@ -5,6 +5,8 @@ from .course import *
 from .programme import *
 from .assessment import *
 from .courseStaff import *
-from .courseAssessment import *
 from .programmeCourse import *
 from .semester import *
+from .courseOffering import *
+from .categoryGroup import *
+from .category import *
