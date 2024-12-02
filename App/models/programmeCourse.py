@@ -13,11 +13,11 @@ class ProgrammeCourse(db.Model):
 
     # relationships
     programme = db.relationship(
-        'Programme', backref='programme_courses', lazy='joined')
+        'Programme', backref='programme_course', lazy='joined')
     course = db.relationship(
-        'Course', backref='programme_courses', lazy='joined')
+        'Course', backref='programme_course', lazy='joined')
     semester = db.relationship(
-        'Semester', backref='programme_courses', lazy='joined')
+        'Semester', backref='programme_course', lazy='joined')
 
     def __init__(self, course_id: str, programme_id: int, semester_id: int):
         self.course_id = course_id
