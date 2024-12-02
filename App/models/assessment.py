@@ -27,9 +27,9 @@ class Assessment(db.Model):
 
     # relationships
     course_offering = db.relationship(
-        'CourseOffering', backref='assessments', lazy='joined')
+        'CourseOffering', backref='assessment', lazy='joined')
     category = db.relationship(
-        'Category', backref='assessments', lazy='joined')
+        'Category', backref='assessment', lazy='joined')
 
     def __init__(self, course_offering_id: int, category_id: int, name: str, status: ApprovalStatus,
                  start_date: str, end_date: str, start_time: str, end_time: str, weight: float):
