@@ -25,7 +25,7 @@ class Staff(User, UserMixin):
     global_role = db.Column(db.Enum(Role), nullable=False)
     # relationship to CourseStaff
     course_staff = db.relationship(
-        'CourseStaff', backref='staff', lazy='joined')
+        'CourseStaff', backref='user', lazy='joined')
 
     def __init__(self, first_name, last_name, id, global_role, email, password):
         super().__init__(id, password, email)
