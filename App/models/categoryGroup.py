@@ -1,9 +1,11 @@
 from App.database import db
 
+
 class CategoryGroup(db.Model):
     __tablename__ = 'category_group'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True,
+                   autoincrement=True, nullable=False)
     average_duration_days = db.Column(db.Integer, nullable=False)
 
     def __init__(self, average_duration_days):

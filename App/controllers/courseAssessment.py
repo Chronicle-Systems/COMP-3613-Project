@@ -43,7 +43,8 @@ def get_course_assessments_by_level(level):
     courses = Course.query.filter_by(level=level).all()
     assessments = []
     for c in courses:
-        assessments.extend(get_course_assessments_by_course_code(c.course_code))
+        assessments.extend(
+            get_course_assessments_by_course_code(c.course_code))
     return assessments
 
 

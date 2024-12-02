@@ -1,13 +1,17 @@
 from App.database import db
 
+
 class Category(db.Model):
     __tablename__ = 'category'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True,
+                   autoincrement=True, nullable=False)
     name = db.Column(db.String, nullable=False, unique=True)
-    group_id = db.Column(db.Integer, db.ForeignKey('category_group.id'), nullable=False)
+    group_id = db.Column(db.Integer, db.ForeignKey(
+        'category_group.id'), nullable=False)
 
-    group = db.relationship('CategoryGroup', backref=db.backref('categories', lazy='dynamic'))
+    group = db.relationship(
+        'CategoryGroup', backref=db.backref('category', lazy='dynamic'))
 
     def __init__(self, name, group_id):
         self.name = name

@@ -1,16 +1,23 @@
 from App.database import db
 
+
 class CourseOffering(db.Model):
     __tablename__ = 'course_offering'
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
-    semester_id = db.Column(db.Integer, db.ForeignKey('semester.id'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True,
+                   autoincrement=True, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey(
+        'course.id'), nullable=False)
+    semester_id = db.Column(db.Integer, db.ForeignKey(
+        'semester.id'), nullable=False)
 
     # relationships
-    course = db.relationship('Course', backref=db.backref('offerings', lazy='dynamic'))
-    semester = db.relationship('Semester', backref=db.backref('course_offerings', lazy='dynamic'))
-    assessments = db.relationship('Assessment', backref='course_offering', lazy='dynamic')
+    course = db.relationship(
+        'Course', backref=db.backref('course_offering', lazy='dynamic'))
+    semester = db.relationship('Semester', backref=db.backref(
+        'course_offering', lazy='dynamic'))
+    assessments = db.relationship(
+        'Assessment', backref='course_offering', lazy='dynamic')
 
     def __init__(self, course_id, semester_id):
         self.course_id = course_id

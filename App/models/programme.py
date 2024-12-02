@@ -1,11 +1,15 @@
 from App.database import db
 
+
 class Programme(db.Model):
     __tablename__ = 'programme'
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)  # Changed p_ID to id
-    name = db.Column(db.String(100), nullable=False, unique=True)  # Changed p_name to name and added unique constraint
-    programme_courses = db.relationship('CourseProgramme', backref='programme', lazy='joined')  # Updated relationship name
+    id = db.Column(db.Integer, primary_key=True, nullable=False,
+                   autoincrement=True)  # Changed p_ID to id
+    # Changed p_name to name and added unique constraint
+    name = db.Column(db.String(100), nullable=False, unique=True)
+    programme_courses = db.relationship(
+        'CourseProgramme', backref='programme', lazy='joined')  # Updated relationship name
 
     def __init__(self, name: str):
         self.name = name

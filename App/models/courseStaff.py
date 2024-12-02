@@ -3,18 +3,23 @@ from .course import CourseOffering
 from .staff import Staff
 from datetime import date
 
+
 class CourseStaff(db.Model):
     __tablename__ = 'course_staff'
 
-    staff_id = db.Column(db.Integer, db.ForeignKey('staff.id'), primary_key=True, nullable=False)
-    course_offering_id = db.Column(db.Integer, db.ForeignKey('course_offering.id'), primary_key=True, nullable=False)
+    staff_id = db.Column(db.Integer, db.ForeignKey(
+        'staff.id'), primary_key=True, nullable=False)
+    course_offering_id = db.Column(db.Integer, db.ForeignKey(
+        'course_offering.id'), primary_key=True, nullable=False)
     course_role = db.Column(db.String, nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
 
     # relationships
-    staff = db.relationship('Staff', backref=db.backref('course_staff', lazy='dynamic'))
-    course_offering = db.relationship('CourseOffering', backref=db.backref('course_staff', lazy='dynamic'))
+    staff = db.relationship('Staff', backref=db.backref(
+        'course_staff', lazy='dynamic'))
+    course_offering = db.relationship(
+        'CourseOffering', backref=db.backref('course_staff', lazy='dynamic'))
 
     def __init__(self, staff_id: int, course_offering_id: int, course_role: str, start_date: date, end_date: date):
         self.staff_id = staff_id

@@ -7,8 +7,9 @@ class User(db.Model, UserMixin):
     __tablename__ = 'user'
     __abstract__ = True
 
-    id = db.Column(db.Integer, unique=True, primary_key=True, autoincrement=True, nullable=False)
-    public_ID = db.Column(db.Integer, unique=True, nullable=False) 
+    id = db.Column(db.Integer, unique=True, primary_key=True,
+                   autoincrement=True, nullable=False)
+    public_ID = db.Column(db.Integer, unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
 
@@ -26,16 +27,15 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_json(self):
-	    return {
+        return {
             "id": self.id,
             "public_ID": self.public_ID,
             "password": self.password,
             "email": self.email
         }
-    
+
     def __str__(self):
         return f"Staff(id={self.id}, public_ID={self.public_ID}, email={self.email})"
-    
+
     def __repr__(self):
         return f"<User (id={self.id}, public_ID={self.public_ID}, email='{self.email}')>"
-  

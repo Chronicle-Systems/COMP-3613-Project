@@ -3,6 +3,7 @@ from .user import User
 
 from flask_login import UserMixin, login_user
 
+
 class Admin(User, UserMixin):
     __tablename__ = 'admin'
 
@@ -14,12 +15,12 @@ class Admin(User, UserMixin):
 
     def __str__(self):
         return f"Admin (ID={self.id}, Email={self.email})"
-  
+
     def __repr__(self):
         return f"<Admin (ID={self.id}, Email='{self.email}')>"
-  
+
     def to_json(self):
-        return{
+        return {
             "admin_ID": self.id,
             "email": self.email
         }
