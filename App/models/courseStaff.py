@@ -3,23 +3,26 @@ from .courseOffering import CourseOffering
 from .staff import Staff
 from datetime import date
 
-
 class CourseStaff(db.Model):
     __tablename__ = 'course_staff'
 
-    staff_id = db.Column(db.Integer, db.ForeignKey(
-        'staff.id'), primary_key=True, nullable=False)
-    course_offering_id = db.Column(db.Integer, db.ForeignKey(
-        'course_offering.id'), primary_key=True, nullable=False)
+    staff_id = db.Column(
+        db.Integer, db.ForeignKey('staff.id'), primary_key=True, nullable=False
+    )
+    course_offering_id = db.Column(
+        db.Integer, db.ForeignKey('course_offering.id'), primary_key=True, nullable=False
+    )
     course_role = db.Column(db.String, nullable=False)
     start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date, nullable=False)
 
-    # relationships
-    staff = db.relationship('Staff', backref=db.backref(
-        'course_staff', lazy='dynamic'))
+    # Relationships
+    staff = db.relationship(
+        'Staff', back_populates='course_staff'
+    )
     course_offering = db.relationship(
-        'CourseOffering', backref=db.backref('course_staff', lazy='dynamic'))
+        'CourseOffering', back_populates='course_staff'
+    )
 
     def __init__(self, staff_id: int, course_offering_id: int, course_role: str, start_date: date, end_date: date):
         self.staff_id = staff_id
@@ -43,7 +46,9 @@ class CourseStaff(db.Model):
             "end_date": self.end_date.isoformat() if self.end_date else None,
         }
 
-    # add new CourseStaff
-    def add_course_staff(self):
-        db.session.add(self)
+    @staticmethod
+    def add_course_staff(staff_id: int, course_offering_id: int, course_role: str, start_date: date, end_date: date):
+        new_course_staff = CourseStaff(staff_id, course_offering_id, course_role, start_date, end_date)
+        db.session.add(new_course_staff)
         db.session.commit()
+        return new_course_staff

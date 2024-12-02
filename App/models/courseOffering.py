@@ -1,23 +1,21 @@
 from App.database import db
 
-
 class CourseOffering(db.Model):
     __tablename__ = 'course_offering'
 
-    id = db.Column(db.Integer, primary_key=True,
-                   autoincrement=True, nullable=False)
-    course_id = db.Column(db.Integer, db.ForeignKey(
-        'course.id'), nullable=False)
-    semester_id = db.Column(db.Integer, db.ForeignKey(
-        'semester.id'), nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    semester_id = db.Column(db.Integer, db.ForeignKey('semester.id'), nullable=False)
 
-    # relationships
-    course = db.relationship(
-        'Course', backref=db.backref('course_offering', lazy='dynamic'))
-    semester = db.relationship('Semester', backref=db.backref(
-        'course_offering', lazy='dynamic'))
+    # Relationships
+    course = db.relationship("Course", back_populates="offerings")
+    semester = db.relationship("Semester", back_populates="course_offerings")  # Use back_populates here
     assessments = db.relationship(
-        'Assessment', backref='course_offering', lazy='dynamic')
+        'Assessment', back_populates='course_offering', lazy='dynamic'
+    )
+    course_staff = db.relationship(
+        'CourseStaff', back_populates='course_offering', lazy='dynamic'
+    )
 
     def __init__(self, course_id, semester_id):
         self.course_id = course_id
@@ -36,5 +34,6 @@ class CourseOffering(db.Model):
             "semester_id": self.semester_id,
             "course": self.course.to_json() if self.course else None,
             "semester": self.semester.to_json() if self.semester else None,
-            "assessments": [assessment.to_json() for assessment in self.assessments]
+            "assessments": [assessment.to_json() for assessment in self.assessments],
+            "course_staff": [staff.to_json() for staff in self.course_staff],
         }

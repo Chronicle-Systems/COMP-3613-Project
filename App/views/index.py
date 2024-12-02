@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, render_template
 from App.database import db
-from App.models import Staff, Course, Assessment, Programme, Admin, Semester, CourseStaff, CourseAssessment
+from App.models import Staff, Course, Assessment, Programme, Admin, Semester, CourseStaff
 
 index_views = Blueprint('index_views', __name__,
                         template_folder='../templates')
@@ -78,23 +78,23 @@ def init():
     db.session.add(asm8)
 
     # create course assessments
-    ca1 = CourseAssessment(courseCode='COMP1700', a_ID=1, startDate='2024-04-08',
+    ca1 = Assessment(courseCode='COMP1700', a_ID=1, startDate='2024-04-08',
                            endDate='2024-04-08', startTime='08:00:00', endTime='10:00:00', clashDetected=False)
-    ca2 = CourseAssessment(courseCode='COMP1700', a_ID=3, startDate='2024-04-09',
+    ca2 = Assessment(courseCode='COMP1700', a_ID=3, startDate='2024-04-09',
                            endDate='2024-04-09', startTime='00:00:00', endTime='23:59:00', clashDetected=False)
-    ca3 = CourseAssessment(courseCode='COMP1700', a_ID=6, startDate='2024-04-10',
+    ca3 = Assessment(courseCode='COMP1700', a_ID=6, startDate='2024-04-10',
                            endDate='2024-04-10', startTime='09:00:00', endTime='12:00:00', clashDetected=False)
-    ca4 = CourseAssessment(courseCode='COMP2700', a_ID=1, startDate='2024-04-15',
+    ca4 = Assessment(courseCode='COMP2700', a_ID=1, startDate='2024-04-15',
                            endDate='2024-04-15', startTime='08:00:00', endTime='10:00:00', clashDetected=False)
-    ca5 = CourseAssessment(courseCode='COMP2700', a_ID=3, startDate='2024-04-16',
+    ca5 = Assessment(courseCode='COMP2700', a_ID=3, startDate='2024-04-16',
                            endDate='2024-04-16', startTime='00:00:00', endTime='23:59:00', clashDetected=False)
-    ca6 = CourseAssessment(courseCode='COMP2700', a_ID=6, startDate='2024-04-17',
+    ca6 = Assessment(courseCode='COMP2700', a_ID=6, startDate='2024-04-17',
                            endDate='2024-04-17', startTime='09:00:00', endTime='12:00:00', clashDetected=False)
-    ca7 = CourseAssessment(courseCode='COMP3700', a_ID=1, startDate='2024-04-22',
+    ca7 = Assessment(courseCode='COMP3700', a_ID=1, startDate='2024-04-22',
                            endDate='2024-04-22', startTime='08:00:00', endTime='10:00:00', clashDetected=False)
-    ca8 = CourseAssessment(courseCode='COMP3700', a_ID=3, startDate='2024-04-23',
+    ca8 = Assessment(courseCode='COMP3700', a_ID=3, startDate='2024-04-23',
                            endDate='2024-04-23', startTime='00:00:00', endTime='23:59:00', clashDetected=False)
-    ca9 = CourseAssessment(courseCode='COMP3700', a_ID=6, startDate='2024-04-24',
+    ca9 = Assessment(courseCode='COMP3700', a_ID=6, startDate='2024-04-24',
                            endDate='2024-04-24', startTime='09:00:00', endTime='12:00:00', clashDetected=False)
     db.session.add(ca1)
     db.session.add(ca2)

@@ -1,15 +1,15 @@
 from App.database import db
 
-
 class Programme(db.Model):
     __tablename__ = 'programme'
 
-    id = db.Column(db.Integer, primary_key=True, nullable=False,
-                   autoincrement=True)  # Changed p_ID to id
-    # Changed p_name to name and added unique constraint
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     name = db.Column(db.String(100), nullable=False, unique=True)
+
+    # relationships
     programme_courses = db.relationship(
-        'CourseProgramme', backref='programme', lazy='joined')  # Updated relationship name
+        "ProgrammeCourse", back_populates="programme", lazy='dynamic'
+    )
 
     def __init__(self, name: str):
         self.name = name
@@ -22,6 +22,6 @@ class Programme(db.Model):
 
     def to_json(self):
         return {
-            "id": self.id,  # Changed p_ID to id
+            "id": self.id,
             "name": self.name
         }

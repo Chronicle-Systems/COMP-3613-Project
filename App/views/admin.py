@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash
 from flask_jwt_extended import jwt_required
-from App.controllers import Course, CourseAssessment
+from App.controllers import Course
 from App.models import Admin
 from App.database import db
 from werkzeug.utils import secure_filename
@@ -9,20 +9,20 @@ import csv
 from datetime import datetime
 
 from App.controllers.course import (
-    add_Course,
-    list_Courses,
+    add_course,
+    list_courses,
     get_course,
-    delete_Course
+    delete_course
 )
 
-from App.controllers.semester import (
-    add_sem
-)
+# from App.controllers.semester import (
+#     add_sem
+# )
 
-from App.controllers.courseAssessment import (
-    get_clashes,
-    get_CourseAsm_id
-)
+# from App.controllers.Assessment import (
+#     get_clashes,
+#     get_CourseAsm_id
+# )
 
 admin_views = Blueprint('admin_views', __name__,
                         template_folder='../templates')

@@ -1,22 +1,21 @@
 from App.database import db
 from enum import Enum
 
-
 class ApprovalStatus(Enum):
     APPROVED = "Approved"
     PENDING = "Pending"
     REJECTED = "Rejected"
 
-
 class Assessment(db.Model):
     __tablename__ = 'assessment'
 
-    id = db.Column(db.Integer, primary_key=True,
-                   autoincrement=True, nullable=False)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     course_offering_id = db.Column(
-        db.Integer, db.ForeignKey('course_offering.id'), nullable=False)
-    category_id = db.Column(db.Integer, db.ForeignKey(
-        'category.id'), nullable=False)
+        db.Integer, db.ForeignKey('course_offering.id'), nullable=False
+    )
+    category_id = db.Column(
+        db.Integer, db.ForeignKey('category.id'), nullable=False
+    )
     status = db.Column(db.Enum(ApprovalStatus), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     start_date = db.Column(db.Date, nullable=False)
@@ -27,12 +26,12 @@ class Assessment(db.Model):
 
     # relationships
     course_offering = db.relationship(
-        'CourseOffering', backref='assessment', lazy='joined')
-    category = db.relationship(
-        'Category', backref='assessment', lazy='joined')
+        'CourseOffering', back_populates='assessments', lazy='joined'
+    )
+    category = db.relationship('Category', backref=db.backref('assessments', lazy='dynamic'))
 
     def __init__(self, course_offering_id: int, category_id: int, name: str, status: ApprovalStatus,
-                 start_date: str, end_date: str, start_time: str, end_time: str, weight: float):
+                 start_date, end_date, start_time, end_time, weight: float):
         self.course_offering_id = course_offering_id
         self.category_id = category_id
         self.name = name
@@ -56,18 +55,19 @@ class Assessment(db.Model):
             "category_id": self.category_id,
             "status": self.status.value,
             "name": self.name,
-            "start_date": self.start_date,
-            "end_date": self.end_date,
-            "start_time": self.start_time,
-            "end_time": self.end_time,
+            "start_date": str(self.start_date),
+            "end_date": str(self.end_date),
+            "start_time": str(self.start_time),
+            "end_time": str(self.end_time),
             "weight": self.weight
         }
 
-    # add new assessment to course
-    def add_assessment(self, course_offering_id: int, category_id: int, name: str, status: ApprovalStatus,
-                       start_date: str, end_date: str, start_time: str, end_time: str, weight: float):
+    @staticmethod
+    def add_assessment(course_offering_id: int, category_id: int, name: str, status: ApprovalStatus,
+                       start_date, end_date, start_time, end_time, weight: float):
         new_assessment = Assessment(
-            course_offering_id, category_id, name, status, start_date, end_date, start_time, end_time, weight)
-        db.session.add(new_assessment)  # Add to db
+            course_offering_id, category_id, name, status, start_date, end_date, start_time, end_time, weight
+        )
+        db.session.add(new_assessment)
         db.session.commit()
         return new_assessment

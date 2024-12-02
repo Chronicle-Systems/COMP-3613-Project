@@ -9,7 +9,7 @@ from App.models import Staff, Course, Assessment, Programme, Admin
 from App.controllers import Course
 
 from App.controllers.course import (
-    add_Course
+    add_course
 )
 
 # This commands file allow you to create convenient CLI commands for testing controllers!!
@@ -24,7 +24,7 @@ def initialize():
     # db.init_app(app)
     db.create_all()
     # bob = Staff("bob", "test", 300456, "Lecturer 1", "bob@gmail.com", "bobpass")
-    bob = Admin(u_ID=999, email="bob@gmail.com", password="bobpass")
+    bob = Admin(u_ID=999, public_ID="unique_id_value", email="bob@gmail.com", password="bobpass")
     db.session.add(bob)
     db.session.commit()
     print(bob)
