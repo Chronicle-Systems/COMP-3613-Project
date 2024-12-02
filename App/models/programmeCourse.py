@@ -1,16 +1,23 @@
 from App.database import db
 
+
 class ProgrammeCourse(db.Model):
     __tablename__ = 'programme_course'
 
-    programme_id = db.Column(db.Integer, db.ForeignKey('programme.id'), primary_key=True, nullable=False)
-    course_id = db.Column(db.String(8), db.ForeignKey('course.courseCode'), primary_key=True, nullable=False)
-    semester_id = db.Column(db.Integer, db.ForeignKey('semester.id'), primary_key=True, nullable=False)
+    programme_id = db.Column(db.Integer, db.ForeignKey(
+        'programme.id'), primary_key=True, nullable=False)
+    course_id = db.Column(db.String(8), db.ForeignKey(
+        'course.courseCode'), primary_key=True, nullable=False)
+    semester_id = db.Column(db.Integer, db.ForeignKey(
+        'semester.id'), primary_key=True, nullable=False)
 
     # relationships
-    programme = db.relationship('Programme', backref='programme_courses', lazy='joined')
-    course = db.relationship('Course', backref='programme_courses', lazy='joined')
-    semester = db.relationship('Semester', backref='programme_courses', lazy='joined')
+    programme = db.relationship(
+        'Programme', backref='programme_courses', lazy='joined')
+    course = db.relationship(
+        'Course', backref='programme_courses', lazy='joined')
+    semester = db.relationship(
+        'Semester', backref='programme_courses', lazy='joined')
 
     def __init__(self, course_id: str, programme_id: int, semester_id: int):
         self.course_id = course_id

@@ -10,6 +10,7 @@ def login_admin(email, password):
             return admin.login()
     return "Login failed"
 
+
 def login_staff(email, password):
     staff = db.session.query(Staff).filter(Staff.email == email).first()
     if staff != None:

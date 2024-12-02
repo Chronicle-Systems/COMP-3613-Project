@@ -10,12 +10,14 @@ from flask_jwt_extended import (
 )
 from App.models import User, Admin, Staff, user
 
+
 def authenticate(email, password):
     """Authenticate user with email and password"""
     user = User.query.filter_by(email=email).first()
     if user and user.check_password(password):
         return user
     return None
+
 
 def setup_jwt(app):
     jwt = JWTManager(app)
@@ -28,6 +30,7 @@ def setup_jwt(app):
     def user_lookup_callback(_jwt_header, jwt_data):
         identity = jwt_data["sub"]
         return User.query.get(identity)
+
 
 def add_auth_context(app):
     @app.context_processor
@@ -43,14 +46,18 @@ def add_auth_context(app):
             current_user = None
         return dict(is_authenticated=is_authenticated, current_user=current_user)
 
+
 def identity(payload):
     return User.query.get(payload['identity'])
+
 
 def login(user):
     return flask_login.login_user(user)
 
+
 def logout(user):
     flask_login.logout_user()
+
 
 def setup_flask_login(app):
     login_manager = flask_login.LoginManager()
@@ -71,6 +78,7 @@ def setup_flask_login(app):
         if admin:
             return admin
         return None
+
 
 def login_required(required_class):
 

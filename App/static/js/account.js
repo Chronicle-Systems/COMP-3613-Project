@@ -6,65 +6,62 @@ const tableBody = document.getElementById("courseTableBody");
 const tableRows = tableBody.querySelectorAll("tr.course-row");
 
 tableRows.forEach((row) => {
-  row.addEventListener("click", (event) => {
-    event.stopPropagation(); // Stop event bubbling
-    const courseCode = row.querySelector("td").textContent;
-    addCourse(courseCode);
-  });
+	row.addEventListener("click", (event) => {
+		event.stopPropagation(); // Stop event bubbling
+		const courseCode = row.querySelector("td").textContent;
+		addCourse(courseCode);
+	});
 });
 
 function handleSearch(e) {
-  e.preventDefault(); // Prevent form submission
-  const searchTerm = searchInput.value.toLowerCase();
+	e.preventDefault(); // Prevent form submission
+	const searchTerm = searchInput.value.toLowerCase();
 
-  tableRows.forEach((row) => {
-    const courseCode = row.querySelector("td").textContent;
+	tableRows.forEach((row) => {
+		const courseCode = row.querySelector("td").textContent;
 
-    if (courseCode.includes(searchTerm)) {
-        row.style.display = ""; // Show row if it matches search term
-    } else {
-        row.style.display = "none"; // Hide row if it doesn't match
-    }
-  });
-
+		if (courseCode.includes(searchTerm)) {
+			row.style.display = ""; // Show row if it matches search term
+		} else {
+			row.style.display = "none"; // Hide row if it doesn't match
+		}
+	});
 }
 
 function addCourse(course) {
-  if (!myCourses.includes(course)) {
-    myCourses.push(course);
-    const courseElement = document.createElement("p");
-    courseElement.textContent = course;
-    courseElement.classList.add("selected-course");
-    selectedCourses.appendChild(courseElement);
-    const courseCodesInput = document.getElementById("courseCodesInput");
-    courseCodesInput.value = JSON.stringify(myCourses);
-  }
-  // Clear search input and reset dropdown
-  resetSearch()
+	if (!myCourses.includes(course)) {
+		myCourses.push(course);
+		const courseElement = document.createElement("p");
+		courseElement.textContent = course;
+		courseElement.classList.add("selected-course");
+		selectedCourses.appendChild(courseElement);
+		const courseCodesInput = document.getElementById("courseCodesInput");
+		courseCodesInput.value = JSON.stringify(myCourses);
+	}
+	// Clear search input and reset dropdown
+	resetSearch();
 }
 
-function resetSearch(){
-  searchInput.value = "";
-  tableRows.forEach((row) => {
-    row.style.display = "none";
-  });
-  
+function resetSearch() {
+	searchInput.value = "";
+	tableRows.forEach((row) => {
+		row.style.display = "none";
+	});
 }
 
-function setExistingCourses(){
-  myCourses.forEach(course =>{
-    const courseElement = document.createElement("p");
-    courseElement.textContent = course;
-    courseElement.classList.add("selected-course");
-    selectedCourses.appendChild(courseElement);
-    const courseCodesInput = document.getElementById("courseCodesInput");
-    courseCodesInput.value = JSON.stringify(myCourses);
-  })
+function setExistingCourses() {
+	myCourses.forEach((course) => {
+		const courseElement = document.createElement("p");
+		courseElement.textContent = course;
+		courseElement.classList.add("selected-course");
+		selectedCourses.appendChild(courseElement);
+		const courseCodesInput = document.getElementById("courseCodesInput");
+		courseCodesInput.value = JSON.stringify(myCourses);
+	});
 }
 
-setExistingCourses()
+setExistingCourses();
 
-resetSearch()
+resetSearch();
 
 searchInput.addEventListener("keyup", handleSearch);
-

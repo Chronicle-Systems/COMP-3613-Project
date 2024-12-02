@@ -20,6 +20,7 @@ def register_staff(first_name, last_name, u_id, status, email, password):
     db.session.commit()
     return new_staff
 
+
 def add_course_staff(u_id, course_code):
     existing_course_staff = CourseStaff.query.filter_by(
         u_id=u_id, course_code=course_code).first()
@@ -29,6 +30,7 @@ def add_course_staff(u_id, course_code):
     db.session.add(new_course_staff)
     db.session.commit()
     return new_course_staff
+
 
 def get_registered_courses(u_id):
     course_staff_list = CourseStaff.query.filter_by(u_id=u_id).all()
