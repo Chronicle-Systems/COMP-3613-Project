@@ -14,7 +14,7 @@ class Assessment(db.Model):
     id = db.Column(db.Integer, primary_key=True,
                    autoincrement=True, nullable=False)
     course_offering_id = db.Column(
-        db.Integer, db.ForeignKey('courseOffering.id'), nullable=False)
+        db.Integer, db.ForeignKey('course_offering.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey(
         'category.id'), nullable=False)
     status = db.Column(db.Enum(ApprovalStatus), nullable=False)
