@@ -11,7 +11,7 @@ class Category(db.Model):
         'category_group.id'), nullable=False)
 
     group = db.relationship(
-        'CategoryGroup', backref=db.backref('categories', lazy='dynamic'))
+        'CategoryGroup', backref=db.backref('category', lazy='dynamic'))
 
     def __init__(self, name, group_id):
         self.name = name
