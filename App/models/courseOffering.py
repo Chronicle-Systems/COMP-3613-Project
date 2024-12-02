@@ -13,9 +13,9 @@ class CourseOffering(db.Model):
 
     # relationships
     course = db.relationship(
-        'Course', backref=db.backref('offerings', lazy='dynamic'))
+        'Course', backref=db.backref('course_offering', lazy='dynamic'))
     semester = db.relationship('Semester', backref=db.backref(
-        'course_offerings', lazy='dynamic'))
+        'course_offering', lazy='dynamic'))
     assessments = db.relationship(
         'Assessment', backref='course_offering', lazy='dynamic')
 
