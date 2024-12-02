@@ -1,9 +1,9 @@
-from App.models import CourseAssessment, Assessment, Course
+from App.models import CourseOffering, Assessment, Course
 from App.database import db
 
 
 def create_assessment(course_code, a_id, start_date, end_date, start_time, end_time, clash_detected):
-    new_assessment = CourseAssessment(
+    new_assessment = CourseOffering(
         course_code=course_code,
         a_id=a_id,
         start_date=start_date,
@@ -32,11 +32,11 @@ def get_assessment_category_by_id(a_id):
 
 
 def get_course_assessment_by_id(id):
-    return CourseAssessment.query.filter_by(id=id).first()
+    return CourseOffering.query.filter_by(id=id).first()
 
 
 def get_course_assessments_by_course_code(code):
-    return CourseAssessment.query.filter_by(course_code=code).all()
+    return CourseOffering.query.filter_by(course_code=code).all()
 
 
 def get_course_assessments_by_level(level):
@@ -55,4 +55,4 @@ def delete_course_assessment(course_assessment):
 
 
 def get_clashes():
-    return CourseAssessment.query.filter_by(clash_detected=True).all()
+    return CourseOffering.query.filter_by(clash_detected=True).all()

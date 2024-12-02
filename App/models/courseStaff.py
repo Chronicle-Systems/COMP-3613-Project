@@ -1,5 +1,5 @@
 from App.database import db
-from .course import CourseOffering
+from .courseOffering import CourseOffering
 from .staff import Staff
 from datetime import date
 
