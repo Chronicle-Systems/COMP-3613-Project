@@ -1,113 +1,185 @@
+*,
+*:before,
+*:after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
-	display: flex;
-	justify-content: center;
-	min-height: 100vh;
-	align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+    background-color: #080710;
+}
+
+.nav {
+    background-color: #007bff;
+    color: #000000;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 4rem);
 }
 
 form {
-	background: var(--secondary-color);
-	min-width: 300px;
-	margin: 0 auto;
-	border-radius: 10px;
-	padding: 1rem 1.5rem;
+    width: 400px;
+    background-color: rgba(255, 255, 255, 0.13);
+    border-radius: 10px;
+    padding: 50px 35px;
+    box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+}
 
-	box-shadow: 8px 10px 37px -12px rgba(0, 0, 0, 0.62);
-	-webkit-box-shadow: 8px 10px 37px -12px rgba(0, 0, 0, 0.62);
-	-moz-box-shadow: 8px 10px 37px -12px rgba(0, 0, 0, 0.62);
+form * {
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    outline: none;
+    border: none;
 }
 
 form h1 {
-	text-align: center;
-	font-size: 30px;
-	margin-bottom: 20px;
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+form h3 {
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
 }
 
 form input {
-	width: 100%;
+    width: 100%;
 }
 
 .field_containers input {
-	background: var(--primary-color);
-	border: none;
-	padding: 0.5rem 0.8rem;
-	color: white;
-	border-radius: 6px;
-	margin-bottom: 15px;
+    background: var(--primary-color);
+    border: none;
+    padding: 0.5rem 0.8rem;
+    color: white;
+    border-radius: 6px;
+    margin-bottom: 15px;
 }
 
 .input-label {
-	font-size: 16px;
+    font-size: 16px;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+input {
+    display: block;
+    width: 100%;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+::placeholder {
+    color: #e5e5e5;
 }
 
 #dropdown {
-	background-color: var(--primary-color);
-	color: white;
-	border-radius: 6px;
-	padding: 0.5rem 0.8rem;
-	border: none;
-	width: 100%;
-	margin-bottom: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 6px;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    width: 100%;
+    margin-bottom: 15px;
 }
 
 #register_btn {
-	background: var(--tertiary-color);
-	color: white;
-	border: none;
-	padding: 0.7rem 1.5rem;
-	border-radius: 6px;
-	margin-top: 20px;
-	font-size: 14px;
-	width: 100%;
-	cursor: pointer;
-	transition: background 0.15s ease-in;
+    background: var(--tertiary-color);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-size: 14px;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.15s ease-in;
+}
+
+button {
+    margin-top: 30px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 #register_btn:hover {
-	background: #5d45bd;
+    background: #5d45bd;
 }
 
 .haveAnAccount {
-	color: rgb(129, 128, 128);
-	font-size: 12px;
-	margin-top: 15px;
-	text-align: center;
+    color: rgb(129, 128, 128);
+    font-size: 12px;
+    margin-top: 15px;
+    text-align: center;
 }
 
 .haveAnAccount a {
-	color: rgb(129, 128, 128);
-	text-decoration: underline;
-	transition: 0.25s color ease-in;
+    color: rgb(129, 128, 128);
+    text-decoration: underline;
+    transition: 0.25s color ease-in;
 }
 
 .haveAnAccount a:hover {
-	color: rgb(153, 151, 151);
+    color: rgb(153, 151, 151);
 }
 
 @media screen and (min-width: 480px) {
-	form h1 {
-		font-size: 26px;
-	}
+    form h1 {
+        font-size: 26px;
+    }
 }
-@media screen and (min-width: 900px) {
-	form {
-		min-width: 400px;
-	}
 
-	#register_btn {
-		font-size: 16px;
-	}
+@media screen and (min-width: 900px) {
+    form {
+        min-width: 400px;
+    }
+
+    #register_btn {
+        font-size: 16px;
+    }
 }
 
 @media screen and (min-width: 1024px) {
-	form h1 {
-		font-size: 28px;
-	}
-	.input-label {
-		font-size: 18px;
-	}
+    form h1 {
+        font-size: 28px;
+    }
 
-	.haveAnAccount {
-		font-size: 14px;
-	}
+    .input-label {
+        font-size: 18px;
+    }
+
+    .haveAnAccount {
+        font-size: 14px;
+    }
 }
