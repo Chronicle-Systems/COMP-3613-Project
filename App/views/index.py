@@ -10,8 +10,15 @@ index_views = Blueprint('index_views', __name__,
 
 @index_views.route('/', methods=['GET'])
 def index():
-    return render_template('login.html')
+    return render_template('startPage.html')
 
+@index_views.route('/login', methods=['GET'])
+def login():
+   return render_template('login.html')
+
+@index_views.route('/signup', methods=['GET'])
+def signup():
+   return render_template('signup.html')
 
 @index_views.route('/init', methods=['GET'])
 def init():

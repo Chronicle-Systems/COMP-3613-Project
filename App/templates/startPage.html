@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DCIT Scheduler</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/startPage.css') }}">
+</head>
+<body>
+  <div class="nav">DCIT SCHEDULER</div>
+  <div class="container">
+    <div class="welcome">WELCOME!!</div>
+    <div class="buttons">
+      <a href="{{ url_for('index_views.signup') }}">  
+         <button>SIGN UP!</button>
+      </a>
+      <a href="{{ url_for('index_views.login') }}">
+         <button>LOGIN</button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
