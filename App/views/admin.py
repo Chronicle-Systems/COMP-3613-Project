@@ -15,9 +15,9 @@ from App.controllers.course import (
     delete_course
 )
 
-# from App.controllers.semester import (
-#     add_sem
-# )
+from App.controllers.semester import (
+    create_semester
+)
 
 # from App.controllers.Assessment import (
 #     get_clashes,
@@ -59,12 +59,20 @@ def new_semester_action():
         semBegins = request.form.get('teachingBegins')
         semEnds = request.form.get('teachingEnds')
         semChoice = request.form.get('semester')
-        # used for class detection feature
         maxAssessments = request.form.get('maxAssessments')
-        add_sem(semBegins, semEnds, semChoice, maxAssessments)
-
-        # Return course upload page to upload cvs file for courses offered that semester
-        return render_template('uploadFiles.html')
+        
+        # Convert string dates to datetime objects if needed
+        start_date = datetime.strptime(semBegins, '%Y-%m-%d') 
+        end_date = datetime.strptime(semEnds, '%Y-%m-%d')
+        
+        # Create new semester
+        try:
+            create_semester(start_date, end_date, int(semChoice), int(maxAssessments))
+            flash('Semester created successfully')
+            return render_template('uploadFiles.html')
+        except Exception as e:
+            flash(f'Error creating semester: {str(e)}')
+            return render_template('semester.html')
 
 # Gets csv file with course listings, parses it to store course data and stores it in application
 

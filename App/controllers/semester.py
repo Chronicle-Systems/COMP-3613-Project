@@ -7,7 +7,7 @@ def create_semester(start_date, end_date, semester_number, max_assessments):
         start_date=start_date,
         end_date=end_date,
         semester_number=semester_number,
-        max_assessments=max_assessments
+        weekly_assessment_limit=max_assessments
     )
     db.session.add(semester)
     db.session.commit()
