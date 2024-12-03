@@ -1,0 +1,57 @@
+.dcit-scheduler {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+  
+  .dcit-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .user-name {
+    margin-right: 10px;
+  }
+  
+  .logout-btn {
+    background-color: #ccc;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .dashboard {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .dashboard-item {
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+  }
+  
+  .dashboard-item:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .calendar {
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .calendar-month {
+    margin-bottom: 10px;
+  }

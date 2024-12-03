@@ -33,7 +33,7 @@ admin_views = Blueprint('admin_views', __name__,
 @admin_views.route('/semester', methods=['GET'])
 @jwt_required(Admin)
 def get_upload_page():
-    return render_template('semester.html')
+    return render_template('dashboard.html')
 
 
 @admin_views.route('/uploadFiles', methods=['GET'])
