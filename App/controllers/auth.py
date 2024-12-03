@@ -21,35 +21,33 @@ def authenticate(email, password):
 def setup_jwt(app):
     jwt = JWTManager(app)
 
-    @jwt.user_identity_loader
+    @jwt.user_identity_loader 
     def user_identity_lookup(user):
         """Return the user's ID to be stored in the JWT payload"""
-        # Ensure that the user is a valid object (not a string)
-        if isinstance(user, str):  # If the user is a string (such as email), find the user in the database
-            user = User.query.filter_by(email=user).first()  # Replace 'email' with the appropriate identifier if necessary
-        if user:
-            return user.id  # Now returning the user's ID
-        else:
-            raise ValueError("User not found")
-
-    @jwt.user_lookup_loader
-    def user_lookup_callback(_jwt_header, jwt_data):
-        """Retrieve user based on JWT payload 'sub' field"""
-        identity = jwt_data["sub"]  # JWT "sub" is the identity of the user
-        user = User.query.get(identity) or Admin.query.get(identity) or Staff.query.get(identity)
-        return user
-
-def setup_jwt(app):
-    jwt = JWTManager(app)
-
-    @jwt.user_identity_loader
-    def user_identity_lookup(user):
-        return user.id
+        if hasattr(user, 'id'):
+            return user.id
+        if isinstance(user, str):
+            user_obj = Staff.query.filter_by(email=user).first()
+            if user_obj:
+                return user_obj.id
+            user_obj = Admin.query.filter_by(email=user).first()
+            if user_obj:
+                return user_obj.id
+                
+        raise ValueError("User not found")
 
     @jwt.user_lookup_loader
     def user_lookup_callback(_jwt_header, jwt_data):
         identity = jwt_data["sub"]
-        return User.query.get(identity)
+        user = Staff.query.get(identity)
+        if user:
+            return user
+
+        user = Admin.query.get(identity)
+        if user:
+            return user
+            
+        return None
 
 
 def add_auth_context(app):
