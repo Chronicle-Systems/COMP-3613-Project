@@ -17,9 +17,9 @@ def get_login_page():
 
 @auth_views.route('/login', methods=['POST'])
 def login_action():
-    email = request.form.get('email')  # To be linked to login button
-    password = request.form.get('password')  # To be linked to login button
-    response = login_user(email, password)
+    email = request.form.get('email')
+    password = request.form.get('password')
+    response = login(email, password) 
     if not response:
         flash('Bad email or password given'), 401
     return response

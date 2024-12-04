@@ -229,18 +229,18 @@ def send_email():
 
 @staff_views.route('/register', methods=['POST'])
 def register_staff_action():
-    if request.method == 'POST':
-        firstName = request.form.get('firstName')
-        lastName = request.form.get('lastName')
-        staffID = request.form.get('staffID')
-        status = request.form.get('status')
-        email = request.form.get('email')
-        pwd = request.form.get('password')
-
-        # Field Validation is on HTML Page!
-        register_staff(firstName, lastName, staffID, status, email, pwd)
-        return render_template('login.html')
-        # return redirect(url_for('staff_views.send_email'))
+    data = request.form
+    user = register_staff(
+        data.get('name'),
+        data.get('email'),  
+        data.get('password'),
+        data.get('position'),
+        data.get('id_number')
+    )
+    if user:
+        return redirect(url_for('auth_views.get_login_page'))
+    flash('Error registering staff')
+    return redirect(url_for('staff_views.get_signup_page'))
 
 # Gets account page
 
