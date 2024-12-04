@@ -3,19 +3,16 @@ from App.models import Staff, CourseStaff
 from App.models.admin import Admin
 
 
-def register_staff(first_name, last_name, u_id, status, email, password):
-    # Check if staff already exists
-    existing_staff = Staff.query.filter_by(email=email).first()
-    if existing_staff:
+def register_staff(email, password, first_name, last_name):
+    existing_user = Staff.query.filter_by(email=email).first()
+    if existing_user:
         return None
     new_staff = Staff(
-        first_name=first_name,
-        last_name=last_name,
-        u_id=u_id,
-        status=status,
-        email=email
+        email=email,
+        password=password,
+        firstName=first_name,
+        lastName=last_name
     )
-    new_staff.set_password(password)
     db.session.add(new_staff)
     db.session.commit()
     return new_staff

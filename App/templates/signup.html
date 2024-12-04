@@ -37,79 +37,14 @@
 					<input type="text" id="lastName" name="lastName" required />
 				</div>
 				<div class="field_containers">
-					<label for="staffID" class="input-label">Staff ID</label><br />
-					<input
-						type="number"
-						id="staffID"
-						name="staffID"
-						min="10000000"
-						max="99999999"
-						required
-					/>
-				</div>
-
-				<div>
-					<label for="dropdown">Status</label><br />
-					<select id="dropdown" name="status">
-						<option value="Lecturer 1">Lecturer 1</option>
-						<option value="Lecturer 2">Lecturer 2</option>
-						<option value="Lecturer 3">Lecturer 3</option>
-						<option value="Part Time Lecturer 1">
-							Part Time Lecturer 1
-						</option>
-						<option value="Part Time Lecturer 2">
-							Part Time Lecturer 2
-						</option>
-						<option value="Part Time Lecturer 3">
-							Part Time Lecturer 3
-						</option>
-						<option value="Instructor 1">Instructor 1</option>
-						<option value="Instructor 2">Instructor 2</option>
-						<option value="Instructor 3">Instructor 3</option>
-						<option value="Teaching Assistant">
-							Teaching Assistant
-						</option>
-						<option value="Tutor">Tutor</option>
-						<option value="Part Time Tutor">Part Time Tutor</option>
-						<option value="Head of Department">
-							Head of Department
-						</option>
-					</select>
-				</div>
-				<div class="field_containers">
 					<label for="email" class="input-label">Email</label><br />
-					<input type="email" id="email" name="email" placeholder="Email" required />
+					<input type="email" id="email" name="email" required />
 				</div>
 				<div class="field_containers">
 					<label for="password" class="input-label">Password</label><br />
-					<div id="passwordContainer">
-						<input
-							type="password"
-							id="password"
-							name="password"
-							placeholder="Password"
-							required
-						/>
-						<!-- <label id="togglePassword"></label> -->
-						<!-- <i id="togglePassword" class="material-icons">visibility</i> -->
-					</div>
+					<input type="password" id="password" name="password" required />
 				</div>
-				<div class="field_containers">
-					<label for="confirm_password" class="input-label">Confirm Password</label><br />
-					<input
-						type="password"
-						id="confirm_password"
-						name="confirm_password"
-						placeholder="Confirm Password"
-						required
-					/>
-				</div>
-
-				<button id="register_btn" type="submit">Sign Up</button>
-
-				<p class="haveAnAccount">
-					Already have an account? <a href="/login">Login</a>
-				</p>
+				<button type="submit">Sign Up</button>
 			</form>
 		</div>
 	</body>

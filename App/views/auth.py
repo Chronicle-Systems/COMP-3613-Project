@@ -52,6 +52,24 @@ def logout():
     logout_user()
     return render_template('login.html')
 
+
+@auth_views.route('/signup', methods=['POST'])
+def signup_action():
+    email = request.form.get('email')
+    password = request.form.get('password')
+    first_name = request.form.get('firstName')
+    last_name = request.form.get('lastName')
+
+    # Call the controller function to register the user
+    user = register_staff(email, password, first_name, last_name)
+
+    if user:
+        flash('Registration successful. Please log in.')
+        return redirect(url_for('auth_views.get_login_page'))
+    else:
+        flash('Error registering user.')
+        return redirect(url_for('staff_views.get_signup_page'))
+
 # @auth_views.route('/identify')
 # @jwt_required()
 # def identify_view():
