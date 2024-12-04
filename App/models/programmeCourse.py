@@ -17,17 +17,22 @@ class ProgrammeCourse(db.Model):
         self.programme_id = programme_id
         self.semester_id = semester_id
 
-    def __repr__(self):
-        return f"<ProgrammeCourse (Programme ID={self.programme_id}, Course ID='{self.course_id}', Semester ID={self.semester_id})>"
-
     def __str__(self):
-        return f"ProgrammeCourse (Programme ID={self.programme_id}, Course ID={self.course_id}, Semester ID={self.semester_id})"
+        return f"""
+ProgrammeCourse Info:
+    - Programme ID: {self.programme_id}
+    - Course ID: {self.course_id}
+    - Semester ID: {self.semester_id})
+"""
+
+    def __repr__(self):
+        return (f"<ProgrammeCourse(programme_id={self.programme_id}, "
+                f"course_id='{self.course_id}', "
+                f"semester_id={self.semester_id})>")
 
     def to_json(self):
         return {
             "programme_id": self.programme_id,
             "course_id": self.course_id,
-            "semester_id": self.semester_id,
-            "programme": self.programme.to_json() if self.programme else None,  # Optional: Add programme details
-            "course": self.course.to_json() if self.course else None,  # Optional: Add course details
+            "semester_id": self.semester_id
         }

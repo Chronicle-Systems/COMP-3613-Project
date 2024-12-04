@@ -1,5 +1,6 @@
 from App.database import db
 from enum import Enum
+from datetime import date, time
 
 class ApprovalStatus(Enum):
     APPROVED = "Approved"
@@ -34,7 +35,7 @@ class Assessment(db.Model):
     category = db.relationship('Category', backref=db.backref('assessments', lazy='dynamic'))
 
     def __init__(self, course_offering_id: int, category_id: int, name: str, status: ApprovalStatus,
-                 start_date, end_date, start_time, end_time, weight: float):
+                 start_date: date, end_date: date, start_time: time, end_time: time, weight: float):
         self.course_offering_id = course_offering_id
         self.category_id = category_id
         self.name = name
@@ -45,23 +46,44 @@ class Assessment(db.Model):
         self.end_time = end_time
         self.weight = weight
 
-    def __repr__(self):
-        return f"<Assessment (ID={self.id}, Name='{self.name}', Status='{self.status}')>"
+    def __str__(self) -> str:
+        return f"""
+Assessment Info:
+    - ID: {self.id}
+    - Course Offering ID: {self.course_offering_id}
+    - Category ID: {self.category_id}
+    - Status: {self.status.value}
+    - Name: {self.name}
+    - Start Date: {str(self.start_date)}
+    - End Date: {str(self.end_date)}
+    - Start Time: {str(self.start_time)}
+    - End Time: {str(self.end_time)}
+    - Weight: {self.weight}
+"""
 
-    def __str__(self):
-        return f"Assessment (ID={self.id}, Name={self.name}, Status={self.status})"
+    def __repr__(self) -> str:
+        return (f"<Assessment(id={self.id}, "
+                f"course_offering_id={self.course_offering_id}, "
+                f"category_id={self.category_id}, "
+                f"status={self.status.value}, "
+                f"name={self.name}, "
+                f"start_date= {self.start_date}, "
+                f"end_date={self.end_date}, "
+                f"start_time={self.start_time}, "
+                f"end_time={self.end_time}, "
+                f"weight={self.weight})>")    
 
-    def to_json(self):
+    def to_json(self) -> dict:
         return {
-            "assessmentNo": self.id,
+            "id": self.id,
             "course_offering_id": self.course_offering_id,
             "category_id": self.category_id,
             "status": self.status.value,
             "name": self.name,
-            "start_date": str(self.start_date),
-            "end_date": str(self.end_date),
-            "start_time": str(self.start_time),
-            "end_time": str(self.end_time),
+            "start_date": self.start_date,
+            "end_date": self.end_date,
+            "start_time": self.start_time,
+            "end_time": self.end_time,
             "weight": self.weight
         }
 

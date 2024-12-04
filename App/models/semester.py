@@ -31,6 +31,5 @@ class Semester(db.Model):
             "id": self.id,
             "start_date": self.start_date,
             "end_date": self.end_date,
-            "weekly_assessment_limit": self.weekly_assessment_limit,
-            "offered_courses": [course.to_json() for course in self.course_offerings]
+            "weekly_assessment_limit": self.weekly_assessment_limit
         }

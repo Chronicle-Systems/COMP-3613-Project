@@ -14,13 +14,18 @@ class Programme(db.Model):
     def __init__(self, name: str):
         self.name = name
 
-    def __repr__(self):
-        return f"<Programme (ID={self.id}, Name='{self.name}')>"
+    def __str__(self) -> str:
+        return f"""
+Programme Info:
+    - ID: {self.id}
+    - Name: {self.name}
+"""
 
-    def __str__(self):
-        return f"Programme (ID={self.id}, Name={self.name})"
+    def __repr__(self) -> str:
+        return (f"<Programme(id={self.id}, "
+                f"name='{self.name}')>")
 
-    def to_json(self):
+    def to_json(self) -> dict:
         return {
             "id": self.id,
             "name": self.name

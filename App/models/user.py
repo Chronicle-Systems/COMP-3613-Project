@@ -13,30 +13,34 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
 
-    def __init__(self, public_id, password, email):
+    def __init__(self, public_id: int, password: str, email: str):
         self.public_id = public_id
         self.set_password(password)
         self.email = email
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"""
 Staff Info:
+    - ID: {self.id}
     - Public ID: {self.public_ID}
     - Email: {self.email}
 """
 
-    def __repr__(self):
-        return f"<User(id={self.id}, public_ID={self.public_ID}, hashed_password='*****', email='{self.email}')>"
+    def __repr__(self) -> str:
+        return (f"<User(id={self.id}, "and
+                f"public_ID={self.public_ID}, "
+                f"hashed_password='*****', "
+                f"email='{self.email}')>")
 
-    def to_json(self):
+    def to_json(self) -> dict:
         return {
             "id": self.id,
             "public_id": self.public_ID,
             "email": self.email
         }
 
-    def set_password(self, password):
+    def set_password(self, password: str):
         self.password = generate_password_hash(password)
 
-    def check_password(self, password):
+    def check_password(self, password: str) -> bool:
         return check_password_hash(self.password, password)

@@ -13,21 +13,23 @@ from flask_login import UserMixin
 class Admin(User, UserMixin):
     __tablename__ = 'admin'
 
-    def __init__(self, public_ID, password, email):
-        super().__init__(pub, password, email)  # Call User constructor
-        self.public_ID = public_ID  # Set public_ID for Admin
+    def __init__(self, public_id: int, password: str, email: str):
+        super().__init__(public_id, password, email)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"""
 Admin Info:
     - Public ID: {self.public_ID}
     - Email: {self.email}
 """
 
-    def __repr__(self):
-        return f"<Admin(id={self.id}, public_ID={self.public_ID}, hashed_password='*****', email='{self.email}')>"
+    def __repr__(self) -> str:
+        return (f"<Admin(id={self.id}, "
+                f"public_ID={self.public_ID}, "
+                f"hashed_password='*****', "
+                f"email='{self.email}')>")
 
-    def to_json(self):
+    def to_json(self) -> dict:
         return {
             "id": self.id,
             "public_ID": self.public_ID,

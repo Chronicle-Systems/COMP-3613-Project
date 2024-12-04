@@ -31,11 +31,22 @@ class CourseStaff(db.Model):
         self.start_date = start_date
         self.end_date = end_date
 
-    def __repr__(self):
-        return f"<CourseStaff (Staff ID={self.staff_id}, Course Offering ID={self.course_offering_id}, Role='{self.course_role}')>"
-
     def __str__(self):
-        return f"CourseStaff (Staff ID={self.staff_id}, Course Offering ID={self.course_offering_id}, Role={self.course_role})"
+        return f"""
+CourseStaff Info:
+    - Staff ID: {self.staff_id}
+    - Course Offering ID: {self.course_offering_id}
+    - Course Role: {self.course_role}
+    - Course Assignment Start Date: {self.start_date}
+    - Course Assignment End Date: {self.end_date}
+"""
+    
+    def __repr__(self):
+        return (f"<CourseStaff(staff_id={self.staff_id}, "
+                f"course_offering_id={self.course_offering_id}, "
+                f"course_role='{self.course_role}', "
+                f"start_date={self.start_date}, "
+                f"end_date={self.end_date})>")
 
     def to_json(self):
         return {

@@ -35,7 +35,7 @@ class Staff(User, UserMixin):
         # Assign courses based on role
         # self.cNum = 2 if global_role == Role.LECTURER else 3
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"""
 Staff Info:
     - Public ID: {self.public_id}
@@ -45,22 +45,27 @@ Staff Info:
     - Global Role: {self.global_role.value}
 """
 
-    def __repr__(self):
-        return f"<Admin(id={self.id}, public_ID={self.public_ID}, hashed_password='*****', email='{self.email}', first_name='{self.first_name}', last_name='{self.last_name}', global_role='{self.global_role.value}')>"
+    def __repr__(self) -> str:
+        return (f"<Admin(id={self.id}, "
+                f"public_ID={self.public_ID}, "
+                f"hashed_password='*****', "
+                f"email='{self.email}', "
+                f"first_name='{self.first_name}', "
+                f"last_name='{self.last_name}', "
+                f"global_role='{self.global_role.value}')>")
 
-    def to_json(self):
+    def to_json(self) -> dict:
         return {
             "id": self.id,
             "public_id": self.public_id,
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
-            "global_role": self.global_role.value,
-            "courses_assigned": [course.to_json() for course in self.course_staff]
+            "global_role": self.global_role.value
         }
 
     @staticmethod
-    def register(public_id, password, email, first_name, last_name, global_role):
+    def register(public_id: int, password: int, email: str, first_name: str, last_name: str, global_role: Role):
         new_staff = Staff(public_id, password, email, first_name, last_name, global_role)
         db.session.add(new_staff)
         db.session.commit()
