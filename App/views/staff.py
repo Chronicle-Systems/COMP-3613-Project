@@ -276,38 +276,28 @@ def get_selected_courses():
 @staff_views.route('/assessments', methods=['GET'])
 @jwt_required()
 def get_assessments_page():
-    id = get_uid(get_jwt_identity())  # gets u_id from email token
-    registered_courses = get_registered_courses(id)  # get staff's courses
-
+    id = get_uid(get_jwt_identity())
+    registered_courses = get_registered_courses(id)
     assessments = []
-    for course in registered_courses:
-        # get assessments by course code
-        for assessment in get_course_assessments_by_course_code(course):
-            if assessment.startDate is None:
-                obj = {'id': assessment.id,
-                       'courseCode': assessment.courseCode,
-                       # convert a_ID to category value
-                       'a_ID': get_assessment_category_by_id(assessment.a_ID),
-                       'startDate': assessment.startDate,
-                       'endDate': assessment.endDate,
-                       'startTime': assessment.startTime,
-                       'endTime': assessment.endTime,
-                       'clashDetected': assessment.clashDetected
-                       }
-            else:
-                obj = {'id': assessment.id,
-                       'courseCode': assessment.courseCode,
-                       # convert a_ID to category value
-                       'a_ID': get_assessment_category_by_id(assessment.a_ID),
-                       'startDate': assessment.startDate.isoformat(),
-                       'endDate': assessment.endDate.isoformat(),
-                       'startTime': assessment.startTime.isoformat(),
-                       'endTime': assessment.endTime.isoformat(),
-                       'clashDetected': assessment.clashDetected
-                       }
-            assessments.append(obj)  # add object to list of assessments
 
-    return render_template('assessments.html', courses=registered_courses, assessments=assessments)
+    for course in registered_courses:
+        course_assessments = get_course_assessments_by_course_code(course)
+        for assessment in course_assessments:
+            obj = {
+                'id': assessment.id,
+                'courseCode': assessment.courseCode,
+                'a_ID': get_assessment_category_by_id(assessment.a_ID),
+                'startDate': assessment.startDate.isoformat() if assessment.startDate else None,
+                'endDate': assessment.endDate.isoformat() if assessment.endDate else None,
+                'startTime': assessment.startTime.isoformat() if assessment.startTime else None,
+                'endTime': assessment.endTime.isoformat() if assessment.endTime else None,
+                'clashDetected': assessment.clashDetected
+            }
+            assessments.append(obj)
+    
+    return render_template('assessments.html', 
+                         courses=registered_courses,
+                         assessments=assessments)
 
 # Gets add assessment page
 

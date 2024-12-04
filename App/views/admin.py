@@ -235,3 +235,28 @@ def reject_override(aID):
         db.session.commit()
         print("Rejected override.")
     return redirect(url_for('admin_views.get_clashes_page'))
+
+admin_views.route('/dashboard')
+@jwt_required()
+def dashboard():
+    return render_template('dashboard.html')
+
+@admin_views.route('/newCourse')
+@jwt_required()
+def get_new_course():
+    return render_template('new_course.html')
+
+@admin_views.route('/coursesList')
+@jwt_required() 
+def get_courses():
+    return render_template('courses.html')
+
+@admin_views.route('/assessments')
+@jwt_required()
+def get_assessments():
+    return render_template('assessments.html')
+
+@admin_views.route('/semester')
+@jwt_required()
+def get_semester():
+    return render_template('semester.html')
