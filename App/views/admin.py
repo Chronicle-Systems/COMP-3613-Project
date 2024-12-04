@@ -243,12 +243,12 @@ def dashboard():
 
 @admin_views.route('/newCourse')
 @jwt_required()
-def get_new_course():
+def get_new_course_general():
     return render_template('new_course.html')
 
 @admin_views.route('/coursesList')
 @jwt_required() 
-def get_courses():
+def get_courses_general():
     return render_template('courses.html')
 
 @admin_views.route('/assessments')
