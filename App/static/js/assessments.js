@@ -65,7 +65,7 @@ assessments.forEach((assessment) => {
 	endTimeLabel.classList.add("card-label");
 	endTimeLabel.textContent = "End Time";
 	const endTime = document.createElement("p");
-	endDate.classList.add("end-time");
+	endTime.classList.add("end-time");
 	endTime.textContent = assessment.endTime;
 
 	const clashDetectedLabel = document.createElement("p");
@@ -74,6 +74,22 @@ assessments.forEach((assessment) => {
 	const clashDetected = document.createElement("p");
 	clashDetected.classList.add("clash-detected");
 	clashDetected.textContent = `${assessment.clashDetected}`;
+
+	const ruleInfo = document.createElement("div");
+	ruleInfo.classList.add("rule-info");
+
+	const allowSameLevelText = document.createElement("p");
+	allowSameLevelText.textContent = `Same Level Clashes: ${assessment.allow_same_level ? "Allowed" : "Not Allowed"}`;
+
+	const maxClashesText = document.createElement("p");
+	maxClashesText.textContent = `Max Weekly Clashes: ${assessment.max_weekly_clashes}`;
+
+	const excludedTypesText = document.createElement("p");
+	excludedTypesText.textContent = `Excluded Types: ${assessment.excluded_types}`;
+
+	ruleInfo.appendChild(allowSameLevelText);
+	ruleInfo.appendChild(maxClashesText);
+	ruleInfo.appendChild(excludedTypesText);
 
 	// Create action links (modify and delete can be replaced with actual functionality)
 	const modifyLink = document.createElement("button");
@@ -105,6 +121,7 @@ assessments.forEach((assessment) => {
 	assessmentInfo.appendChild(endTime);
 	assessmentInfo.appendChild(clashDetectedLabel);
 	assessmentInfo.appendChild(clashDetected);
+	assessmentInfo.appendChild(ruleInfo);
 	actions.appendChild(modifyLink);
 	actions.appendChild(deleteLink);
 	card.appendChild(courseDetails);

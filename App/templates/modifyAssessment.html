@@ -51,6 +51,23 @@
                     <input type="time" id="endTime" name="endTime" value="{{ca.endTime}}">
                 </div>
                 
+                <div class="formInputContainer">
+                    <label for="allowSameLevel">Allow Same Level Clashes</label>
+                    <input type="checkbox" name="allowSameLevel" 
+                           {% if ca.allow_same_level %}checked{% endif %}>
+                </div>
+
+                <div class="formInputContainer">
+                    <label for="maxClashes">Max Weekly Clashes</label>
+                    <input type="number" name="maxClashes" min="1" max="10"
+                           value="{{ ca.max_weekly_clashes }}">
+                </div>
+
+                <div class="formInputContainer">
+                    <label for="excludedTypes">Excluded Assessment Types</label>
+                    <input type="text" name="excludedTypes" placeholder="2,4,8"
+                           value="{{ ca.excluded_types }}">
+                </div>
 
             </div>
         </div>

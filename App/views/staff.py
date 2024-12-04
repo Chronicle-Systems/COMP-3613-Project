@@ -356,34 +356,28 @@ def get_modify_assessments_page(id):
 @staff_views.route('/modifyAssessment/<string:id>', methods=['POST'])
 def modify_assessment(id):
     if request.method == 'POST':
-        # get form details
-        course = request.form.get('myCourses')
-        asmType = request.form.get('AssessmentType')
-        startDate = request.form.get('startDate')
-        endDate = request.form.get('endDate')
-        startTime = request.form.get('startTime')
-        endTime = request.form.get('endTime')
-
-        # update record
         assessment = get_course_assessment_by_id(id)
         if assessment:
-            assessment.a_ID = asmType
-            if startDate != '' and endDate != '' and startTime != '' and endTime != '':
-                assessment.startDate = startDate
-                assessment.endDate = endDate
-                assessment.startTime = startTime
-                assessment.endTime = endTime
-
+            assessment.a_ID = request.form.get('AssessmentType')
+            assessment.startDate = request.form.get('startDate')
+            assessment.endDate = request.form.get('endDate')
+            assessment.startTime = request.form.get('startTime')
+            assessment.endTime = request.form.get('endTime')
+            
+            #NEW CLASH FIELD BOIS ( i am going mad with this code somebody help me )
+            assessment.allow_same_level = bool(request.form.get('allowSameLevel'))
+            assessment.max_weekly_clashes = int(request.form.get('maxClashes', 3))
+            assessment.excluded_types = request.form.get('excludedTypes', '2,4,8')
+            
             db.session.commit()
-
-            clash = detect_clash(assessment.id)
-            if clash:
-                assessment.clashDetected = True
-                db.session.commit()
-                flash(
-                    "Clash detected! The maximum amount of assessments for this level has been exceeded.")
-                time.sleep(1)
-
+            
+            if assessment.startDate:
+                clash = detect_clash(assessment.id)
+                if clash:
+                    assessment.clashDetected = True
+                    db.session.commit()
+                    flash("Clash detected based on current rules!")
+                    
     return redirect(url_for('staff_views.get_assessments_page'))
 
 # Delete selected assessment

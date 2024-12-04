@@ -23,6 +23,9 @@ class Assessment(db.Model):
     start_time = db.Column(db.Time, nullable=False)
     end_time = db.Column(db.Time, nullable=False)
     weight = db.Column(db.Float, nullable=False)
+    allow_same_level = db.Column(db.Boolean, default=False)
+    max_weekly_clashes = db.Column(db.Integer, default=3)
+    excluded_types = db.Column(db.String(200))  # Comma-separated a_IDs
 
     # relationships
     course_offering = db.relationship(
