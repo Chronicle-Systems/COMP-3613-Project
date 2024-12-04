@@ -30,10 +30,10 @@ head %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
 <script>
-	var assessments={{ assessments | tojson }};
-	var myCourses={{ myCourses | tojson }};
-	var semester={{ semester | tojson }};
-	var otherAssessments={{ otherAssessments | tojson }};
+	var assessments = "{{assessments|tojson|safe}}";
+	var myCourses = "{{myCourses|tojson|safe}}";
+	var semester = "{{semester|tojson|safe}}";
+	var otherAssessments = "{{otherAssessments|tojson|safe}}";
 </script>
 <script src="{{url_for('static', filename='index.js')}}"></script>
 <script src="{{url_for('static', filename='js/mobileMenu.js')}}"></script>

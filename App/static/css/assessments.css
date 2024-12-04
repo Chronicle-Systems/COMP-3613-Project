@@ -32,7 +32,7 @@
 	text-decoration: none;
 }
 #add_assessment_btn:hover {
-	background-color: #5d45bd;
+	background-color: #007bff;
 }
 
 #filterDropdownAssessments {
@@ -78,7 +78,7 @@ button {
 }
 
 button:hover {
-	background: #5d45bd;
+	background: #007bff;
 }
 
 .delete_btn {

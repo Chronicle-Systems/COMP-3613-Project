@@ -75,7 +75,7 @@ table {
 }
 
 .formBtn:hover {
-	background: #5d45bd;
+	background: #007bff;
 }
 
 .formBtn:nth-child(2) {
@@ -84,7 +84,7 @@ table {
 }
 
 #save_btn:hover {
-	background: #5d45bd;
+	background: #007bff;
 }
 
 h2 {

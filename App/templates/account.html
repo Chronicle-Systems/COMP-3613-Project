@@ -45,7 +45,7 @@ head %}
 	</form>
 </div>
 <script>
-	const myCourses = {{ registered|tojson }};
+	var myCourses = "{{registered|tojson|safe}}";
 	console.log(myCourses);
 </script>
 <script src="../static/js/account.js"></script>
