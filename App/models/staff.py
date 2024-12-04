@@ -19,47 +19,52 @@ class Staff(User, UserMixin):
     __tablename__ = 'staff'
     first_name = db.Column(db.String(120), nullable=False)
     last_name = db.Column(db.String(120), nullable=False)
-    cNum = db.Column(db.Integer, nullable=False, default=0)  # Number of courses assigned
     global_role = db.Column(db.Enum(Role), nullable=False)
+    # cNum = db.Column(db.Integer, nullable=False, default=0)  # Number of courses assigned
 
-    # Relationship to CourseStaff
     course_staff = db.relationship(
         'CourseStaff', back_populates='staff', lazy='dynamic'
     )
 
-    def __init__(self, first_name, last_name, id, global_role, email, password):
-        super().__init__(id, password, email)
+    def __init__(self, public_id, password, email, first_name, last_name, global_role):
+        super().__init__(public_id, password, email)
         self.first_name = first_name
         self.last_name = last_name
         self.global_role = global_role
 
         # Assign courses based on role
-        self.cNum = 2 if global_role == Role.LECTURER else 3
-
-    def __repr__(self):
-        return f"<Staff (ID={self.id}, Name='{self.first_name} {self.last_name}', Role='{self.global_role}')>"
+        # self.cNum = 2 if global_role == Role.LECTURER else 3
 
     def __str__(self):
-        return f"Staff (ID={self.id}, Name={self.first_name} {self.last_name}, Role={self.global_role})"
+        return f"""
+Staff Info:
+    - Public ID: {self.public_id}
+    - Email: {self.email}
+    - First Name: {self.first_name}
+    - Last Name: {self.last_name}
+    - Global Role: {self.global_role.value}
+"""
+
+    def __repr__(self):
+        return f"<Admin(id={self.id}, public_ID={self.public_ID}, hashed_password='*****', email='{self.email}', first_name='{self.first_name}', last_name='{self.last_name}', global_role='{self.global_role.value}')>"
 
     def to_json(self):
         return {
-            "staff_ID": self.id,
+            "id": self.id,
+            "public_id": self.public_id,
+            "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
             "global_role": self.global_role.value,
-            "email": self.email,
-            "coursesNum": self.cNum,
-            "coursesAssigned": [course.to_json() for course in self.course_staff]
+            "courses_assigned": [course.to_json() for course in self.course_staff]
         }
 
     @staticmethod
-    def register(first_name, last_name, id, global_role, email, password):
-        new_staff = Staff(first_name, last_name, id, global_role, email, password)
+    def register(public_id, password, email, first_name, last_name, global_role):
+        new_staff = Staff(public_id, password, email, first_name, last_name, global_role)
         db.session.add(new_staff)
         db.session.commit()
         return new_staff
 
     def login(self):
         return flask_login.login_user(self)
-
