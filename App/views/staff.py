@@ -4,10 +4,11 @@ from flask import current_app as app
 from flask_mail import Mail, Message
 from sqlalchemy import not_
 from App.controllers import staff
-from App.controllers import Course, semester
+from App.controllers import Course
 from App.controllers import Assessment
 from App.database import db
 from App.models.assessment import Assessment
+from App.models.semester import Semester 
 import json
 from flask_jwt_extended import current_user as jwt_current_user, get_jwt_identity
 from flask_jwt_extended import jwt_required
@@ -60,6 +61,10 @@ def get_signup_page():
 @jwt_required()
 def get_calendar_page():
     id = get_uid(get_jwt_identity())  # gets u_id from email token
+    
+    # Get current semester using Semester model
+    sem = Semester.query.order_by(Semester.id.desc()).first()
+    semester_obj = {'start': sem.start_date, 'end': sem.end_date} if sem else None
 
     # Get courses for filter
     courses = []
@@ -102,14 +107,17 @@ def get_calendar_page():
     if not assessments:
         assessments = []
 
-    sem = semester.query.order_by(semester.id.desc()).first()
-    semester_obj = {'start': sem.startDate, 'end': sem.endDate}
-
     messages = []
     message = session.pop('message', None)
     if message:
         messages.append(message)
-    return render_template('index.html', courses=courses, myCourses=myCourses, assessments=myAssessments, semester=semester_obj, otherAssessments=assessments, messages=messages)
+    return render_template('index.html', 
+                         courses=courses, 
+                         myCourses=myCourses, 
+                         assessments=myAssessments, 
+                         semester=semester_obj,
+                         otherAssessments=assessments, 
+                         messages=messages)
 
 
 def format_assessment(item):

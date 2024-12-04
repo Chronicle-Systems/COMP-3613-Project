@@ -1,3 +1,4 @@
+from App.controllers.staff import register_staff
 from flask import Blueprint, flash, redirect, request, jsonify, render_template, url_for, make_response
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, current_user, unset_jwt_cookies, set_access_cookies
 from flask_login import logout_user
@@ -19,7 +20,7 @@ def get_login_page():
 def login_action():
     email = request.form.get('email')
     password = request.form.get('password')
-    response = login(email, password) 
+    response = login_user(email, password) 
     if not response:
         flash('Bad email or password given'), 401
     return response
