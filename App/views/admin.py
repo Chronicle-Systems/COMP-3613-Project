@@ -1,3 +1,4 @@
+from App.controllers import courseAssessment
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash
 from flask_jwt_extended import jwt_required
 from App.controllers import Course
@@ -19,38 +20,27 @@ from App.controllers.semester import (
     create_semester
 )
 
-# from App.controllers.Assessment import (
-#     get_clashes,
-#     get_CourseAsm_id
-# )
+from App.controllers.courseAssessment import (
+    get_clashes,
+    get_course_assessment_by_id
+)
 
-admin_views = Blueprint('admin_views', __name__,
-                        template_folder='../templates')
-
-# Gets Semester Details Page
-
+admin_views = Blueprint('admin_views', __name__, template_folder='../templates')
 
 @admin_views.route('/semester', methods=['GET'])
 @jwt_required(Admin)
 def get_upload_page():
     return render_template('dashboard.html')
 
-
 @admin_views.route('/uploadFiles', methods=['GET'])
 @jwt_required(Admin)
 def get_uploadFiles_page():
     return render_template('uploadFiles.html')
 
-# Gets Course Listings Page
-
-
 @admin_views.route('/coursesList', methods=['GET'])
 @jwt_required(Admin)
 def index():
     return render_template('courses.html')
-
-# Retrieves semester details and stores it in global variables
-
 
 @admin_views.route('/newSemester', methods=['POST'])
 @jwt_required(Admin)
@@ -60,12 +50,9 @@ def new_semester_action():
         semEnds = request.form.get('teachingEnds')
         semChoice = request.form.get('semester')
         maxAssessments = request.form.get('maxAssessments')
-        
-        # Convert string dates to datetime objects if needed
         start_date = datetime.strptime(semBegins, '%Y-%m-%d') 
         end_date = datetime.strptime(semEnds, '%Y-%m-%d')
         
-        # Create new semester
         try:
             create_semester(start_date, end_date, int(semChoice), int(maxAssessments))
             flash('Semester created successfully')
@@ -74,57 +61,41 @@ def new_semester_action():
             flash(f'Error creating semester: {str(e)}')
             return render_template('semester.html')
 
-# Gets csv file with course listings, parses it to store course data and stores it in application
-
-
 @admin_views.route('/uploadcourse', methods=['POST'])
 @jwt_required(Admin)
 def upload_course_file():
     if request.method == 'POST':
         file = request.files['file']
-
-        # Check if file is present
-        if (file.filename == ''):
+        if file.filename == '':
             message = 'No file selected!'
             return render_template('uploadFiles.html', message=message)
         else:
-            # Secure filename
             filename = secure_filename(file.filename)
-
-            # Save file to uploads folder
             file.save(os.path.join('App/uploads', filename))
-
-            # Retrieves course details from file and stores it in database ie. store course info
             fpath = 'App/uploads/' + filename
             with open(fpath, 'r') as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    # create object
-                    course = add_Course(courseCode=row['Course Code'], courseTitle=row['Course Title'], description=row['Course Description'], level=int(
-                        row['Level']), semester=int(row['Semester']), aNum=int(row['Assessment No.']))
-
-            # Redirect to view course listings!
+                    course = add_course(
+                        courseCode=row['Course Code'],
+                        courseTitle=row['Course Title'],
+                        description=row['Course Description'],
+                        level=int(row['Level']),
+                        semester=int(row['Semester']),
+                        aNum=int(row['Assessment No.'])
+                    )
             return redirect(url_for('admin_views.get_courses'))
-
-# Pull course list from database
-
 
 @admin_views.route('/get_courses', methods=['GET'])
 @jwt_required(Admin)
 def get_courses():
-    courses = list_Courses()
+    courses = list_courses()
     return render_template('courses.html', courses=courses)
-
-# Gets Add Course Page
-
 
 @admin_views.route('/newCourse', methods=['GET'])
 @jwt_required(Admin)
 def get_new_course():
     return render_template('addCourse.html')
-
-# Retrieves course info and stores it in database ie. add new course
-
 
 @admin_views.route('/addNewCourse', methods=['POST'])
 @jwt_required(Admin)
@@ -133,27 +104,19 @@ def add_course_action():
         courseCode = request.form.get('course_code')
         title = request.form.get('title')
         description = request.form.get('description')
-        data = request.form
         level = request.form.get('level')
         semester = request.form.get('semester')
         numAssessments = request.form.get('numAssessments')
 
-        course = add_Course(courseCode, title, description,
-                            level, semester, numAssessments)
-
-        # Redirect to view course listings!
+        course = add_course(courseCode, title, description, level, semester, numAssessments)
         return redirect(url_for('admin_views.get_courses'))
-
-# Gets Update Course Page
 
 
 @admin_views.route('/modifyCourse/<string:courseCode>', methods=['GET'])
 @jwt_required(Admin)
 def get_update_course(courseCode):
-    course = get_course(courseCode)  # Gets selected course
+    course = get_course(courseCode) 
     return render_template('updateCourse.html', course=course)
-
-# Selects new course details and updates existing course in database
 
 
 @admin_views.route('/updateCourse', methods=['POST'])
@@ -166,37 +129,26 @@ def update_course():
         level = request.form.get('level')
         semester = request.form.get('semester')
         numAssessments = request.form.get('assessment')
-        # programme = request.form.get('programme')
 
-        delete_Course(get_course(courseCode))
-        add_Course(courseCode, title, description,
-                   level, semester, numAssessments)
+        delete_course(get_course(courseCode))
+        add_course(courseCode, title, description, level, semester, numAssessments)
         flash("Course Updated Successfully!")
-
-    # Redirect to view course listings!
-    return redirect(url_for('admin_views.get_courses'))
-
-# Selects course and removes it from database
-
+        return redirect(url_for('admin_views.get_courses'))
 
 @admin_views.route("/deleteCourse/<string:courseCode>", methods=["POST"])
 @jwt_required(Admin)
 def delete_course_action(courseCode):
     if request.method == 'POST':
-        course = get_course(courseCode)  # Gets selected course
-        delete_Course(course)
+        course = get_course(courseCode) 
+        delete_course(course)
         print(courseCode, " deleted")
         flash("Course Deleted Successfully!")
-
-    # Redirect to view course listings!
     return redirect(url_for('admin_views.get_courses'))
-
 
 @admin_views.route("/clashes", methods=["GET"])
 @jwt_required(Admin)
 def get_clashes_page():
-    # for search
-    all_assessments = CourseAssessment.query.all()
+    all_assessments = courseAssessment.list_assessments()
     start_date = request.args.get('start_date')
     end_date = request.args.get('end_date')
     searchResults = []
@@ -206,26 +158,23 @@ def get_clashes_page():
         for a in all_assessments:
             if start_date <= a.startDate <= end_date or start_date <= a.endDate <= end_date:
                 searchResults.append(a)
-    # for table
     assessments = get_clashes()
     return render_template('clashes.html', assessments=assessments, results=searchResults)
-
 
 @admin_views.route("/acceptOverride/<int:aID>", methods=['POST'])
 @jwt_required(Admin)
 def accept_override(aID):
-    ca = get_CourseAsm_id(aID)
+    ca = get_course_assessment_by_id(aID)
     if ca:
         ca.clashDetected = False
         db.session.commit()
         print("Accepted override.")
     return redirect(url_for('admin_views.get_clashes_page'))
 
-
 @admin_views.route("/rejectOverride/<int:aID>", methods=['POST'])
 @jwt_required(Admin)
 def reject_override(aID):
-    ca = get_CourseAsm_id(aID)
+    ca = get_course_assessment_by_id(aID)
     if ca:
         ca.clashDetected = False
         ca.startDate = None
@@ -236,7 +185,7 @@ def reject_override(aID):
         print("Rejected override.")
     return redirect(url_for('admin_views.get_clashes_page'))
 
-admin_views.route('/dashboard')
+@admin_views.route('/dashboard')
 @jwt_required()
 def dashboard():
     return render_template('dashboard.html')
@@ -247,7 +196,7 @@ def get_new_course_general():
     return render_template('new_course.html')
 
 @admin_views.route('/coursesList')
-@jwt_required() 
+@jwt_required()
 def get_courses_general():
     return render_template('courses.html')
 
