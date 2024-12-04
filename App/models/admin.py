@@ -13,8 +13,8 @@ from flask_login import UserMixin
 class Admin(User, UserMixin):
     __tablename__ = 'admin'
 
-    def __init__(self, public_id: int, password: str, email: str):
-        super().__init__(public_id, password, email)
+    def __init__(self, email: str, password: str):
+        super().__init__(email, password)
 
     def __str__(self) -> str:
         return f"""
@@ -25,14 +25,12 @@ Admin Info:
 
     def __repr__(self) -> str:
         return (f"<Admin(id={self.id}, "
-                f"public_ID={self.public_ID}, "
-                f"hashed_password='*****', "
-                f"email='{self.email}')>")
+                f"email='{self.email}', "
+                f"hashed_password='*****')>")
 
     def to_json(self) -> dict:
         return {
             "id": self.id,
-            "public_ID": self.public_ID,
             "email": self.email
         }
 

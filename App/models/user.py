@@ -8,34 +8,30 @@ class User(db.Model, UserMixin):
     __abstract__ = True
 
     id = db.Column(db.Integer, primary_key=True,
-                   autoincrement=True, nullable=False, unique=True, )
-    public_id = db.Column(db.Integer, nullable=False, unique=True)
+                   autoincrement=True, nullable=False, unique=True, )   # Internal ID (should technically be private)
+    #public_id = db.Column(db.Integer, nullable=False, unique=True)     # Public ID (8160.....); removing for now for simplicity
     hashed_password = db.Column(db.String(120), nullable=False)
     email = db.Column(db.String(120), nullable=False, unique=True)
 
-    def __init__(self, public_id: int, password: str, email: str):
-        self.public_id = public_id
-        self.set_password(password)
+    def __init__(self, email: str, password: str):
         self.email = email
+        self.set_password(password)
 
     def __str__(self) -> str:
         return f"""
 Staff Info:
     - ID: {self.id}
-    - Public ID: {self.public_ID}
     - Email: {self.email}
 """
 
     def __repr__(self) -> str:
-        return (f"<User(id={self.id}, "and
-                f"public_ID={self.public_ID}, "
-                f"hashed_password='*****', "
-                f"email='{self.email}')>")
+        return (f"<User(id={self.id}, "
+                f"email='{self.email}"
+                f"hashed_password='*****')>")
 
     def to_json(self) -> dict:
         return {
             "id": self.id,
-            "public_id": self.public_ID,
             "email": self.email
         }
 

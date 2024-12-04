@@ -26,8 +26,8 @@ class Staff(User, UserMixin):
         'CourseStaff', back_populates='staff', lazy='dynamic'
     )
 
-    def __init__(self, public_id, password, email, first_name, last_name, global_role):
-        super().__init__(public_id, password, email)
+    def __init__(self, email: str, password: str, first_name: str, last_name: str, global_role: Role):
+        super().__init__(email, password)
         self.first_name = first_name
         self.last_name = last_name
         self.global_role = global_role
@@ -38,7 +38,7 @@ class Staff(User, UserMixin):
     def __str__(self) -> str:
         return f"""
 Staff Info:
-    - Public ID: {self.public_id}
+    - ID: {self.id}
     - Email: {self.email}
     - First Name: {self.first_name}
     - Last Name: {self.last_name}
@@ -47,9 +47,8 @@ Staff Info:
 
     def __repr__(self) -> str:
         return (f"<Admin(id={self.id}, "
-                f"public_ID={self.public_ID}, "
-                f"hashed_password='*****', "
                 f"email='{self.email}', "
+                f"hashed_password='*****', "
                 f"first_name='{self.first_name}', "
                 f"last_name='{self.last_name}', "
                 f"global_role='{self.global_role.value}')>")
@@ -57,7 +56,6 @@ Staff Info:
     def to_json(self) -> dict:
         return {
             "id": self.id,
-            "public_id": self.public_id,
             "email": self.email,
             "first_name": self.first_name,
             "last_name": self.last_name,
@@ -65,8 +63,8 @@ Staff Info:
         }
 
     @staticmethod
-    def register(public_id: int, password: int, email: str, first_name: str, last_name: str, global_role: Role):
-        new_staff = Staff(public_id, password, email, first_name, last_name, global_role)
+    def register(email: str, password: str, first_name: str, last_name: str, global_role: Role):
+        new_staff = Staff(email, password, first_name, last_name, global_role)
         db.session.add(new_staff)
         db.session.commit()
         return new_staff
