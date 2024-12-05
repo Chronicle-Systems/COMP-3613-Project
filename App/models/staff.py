@@ -22,16 +22,20 @@ class Staff(User, UserMixin):
     cNum = db.Column(db.Integer, nullable=False, default=0)  # Number of courses assigned
     global_role = db.Column(db.Enum(Role), nullable=False)
 
+    public_ID = db.Column(db.String(100), unique=True,nullable=False)
+
     # Relationship to CourseStaff
     course_staff = db.relationship(
         'CourseStaff', back_populates='staff', lazy='dynamic'
     )
 
-    def __init__(self, first_name, last_name, id, global_role, email, password):
+    def __init__(self, first_name, last_name, id, public_ID, global_role, email, password):
         super().__init__(id, password, email)
         self.first_name = first_name
         self.last_name = last_name
         self.global_role = global_role
+
+        self.public_ID = public_ID
 
         # Assign courses based on role
         self.cNum = 2 if global_role == Role.LECTURER else 3
@@ -54,8 +58,8 @@ class Staff(User, UserMixin):
         }
 
     @staticmethod
-    def register(first_name, last_name, id, global_role, email, password):
-        new_staff = Staff(first_name, last_name, id, global_role, email, password)
+    def register(first_name, last_name, id, public_ID, global_role, email, password):
+        new_staff = Staff(first_name, last_name, id, public_ID, global_role, email, password)
         db.session.add(new_staff)
         db.session.commit()
         return new_staff
