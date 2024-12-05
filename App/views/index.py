@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, redirect, url_for
 from App.database import db
 from App.models import Staff, Course, Assessment, Programme, Admin, Semester, CourseStaff
 from App.models.staff import Role
@@ -13,7 +13,7 @@ index_views = Blueprint('index_views', __name__,
 
 @index_views.route('/', methods=['GET'])
 def index():
-    return render_template('startPage.html')
+    return redirect(url_for('auth_views.get_login_page'))
 
 @index_views.route('/login', methods=['GET'])
 def login():

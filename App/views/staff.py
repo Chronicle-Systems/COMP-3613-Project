@@ -435,3 +435,8 @@ def changePassword():
             db.session.commit()
 
     return render_template('settings.html')
+
+@staff_views.route('/dashboard')
+@jwt_required() 
+def dashboard():
+    return render_template('dashboard.html')

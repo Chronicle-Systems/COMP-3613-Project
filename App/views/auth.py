@@ -30,7 +30,7 @@ def login_user(email, password):
     admin_user = db.session.query(Admin).filter(Admin.email == email).first()
     if admin_user and admin_user.check_password(password):
         response = make_response(
-            redirect(url_for('admin_views.get_upload_page')))
+            redirect(url_for('admin_views.dashboard')))
         token = create_access_token(identity=email)
         response.set_cookie('access_token', token)
         return response
@@ -38,7 +38,7 @@ def login_user(email, password):
         user = db.session.query(Staff).filter(Staff.email == email).first()
         if user and user.check_password(password):
             response = make_response(
-                redirect(url_for('staff_views.get_calendar_page')))
+                redirect(url_for('staff_views.dashboard')))
             token = create_access_token(identity=email)
             response.set_cookie('access_token', token)
             return response
