@@ -85,5 +85,5 @@ select {
 .fc .fc-button-group > .fc-button.fc-button-active,
 .fc .fc-button-group > .fc-button:focus,
 .fc .fc-button-group > .fc-button:hover {
-	background-color: #503b9a;
+	background-color: #007bff;
 }
