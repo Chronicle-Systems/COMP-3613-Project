@@ -4,12 +4,8 @@ from App.database import db
 
 def create_assessment(course_code, a_id, start_date, end_date, start_time, end_time, clash_detected):
     new_assessment = CourseOffering(
-        course_code=course_code,
-        a_id=a_id,
-        start_date=start_date,
-        end_date=end_date,
-        start_time=start_time,
-        end_time=end_time,
+        course_id=course_code,
+        semester_id=1,
         clash_detected=clash_detected
     )
     db.session.add(new_assessment)

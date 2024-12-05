@@ -3,23 +3,19 @@ from App.database import db
 
 
 def add_course(course_code, course_title, description, level, semester, a_num):
-    # Check if course_code is already in db ie. course was already added
-    course = Course.query.get(course_code)
+    course = Course.query.filter_by(courseCode=course_code).first()
     if course:
         return course
-    else:
-        # Add new Course
-        new_course = Course(
-            course_code=course_code,
-            course_title=course_title,
-            description=description,
-            level=level,
-            semester=semester,
-            a_num=a_num
-        )
-        db.session.add(new_course)
-        db.session.commit()
-        return new_course
+    new_course = Course(
+        courseCode=course_code,
+        name=course_title,
+        description=description,
+        level=int(level),
+        credits=int(semester)  # Using semester as credits
+    )
+    db.session.add(new_course)
+    db.session.commit()
+    return new_course
 
 
 def list_courses():
@@ -27,7 +23,7 @@ def list_courses():
 
 
 def get_course(course_code):
-    return Course.query.filter_by(course_code=course_code).first()
+    return Course.query.filter_by(courseCode=course_code).first()
 
 
 def delete_course(course):
