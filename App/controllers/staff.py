@@ -13,19 +13,18 @@ def register_staff(email, password, first_name, last_name):
     last_staff = Staff.query.order_by(Staff.id.desc()).first()
     new_id = (last_staff.id + 1) if last_staff else 1
     
-    public_id = str(new_id)
-    
     global_role = Role.INSTRUCTOR 
     
     new_staff = Staff(
         first_name=first_name,
-        last_name=last_name, 
+        last_name=last_name,
         id=new_id,
-        public_ID=public_id,
         global_role=global_role,
         email=email,
         password=password
     )
+    
+    new_staff.public_ID = new_id
     
     db.session.add(new_staff)
     db.session.commit()
