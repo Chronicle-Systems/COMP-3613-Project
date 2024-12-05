@@ -14,8 +14,9 @@ class Course(db.Model):
     programme_courses = db.relationship("ProgrammeCourse", back_populates="course")
     offerings = db.relationship("CourseOffering", back_populates="course")
 
-    def __init__(self, courseCode, name, description, level, credits):
-        self.courseCode = courseCode
+    def __init__(self,id, code, name, description, credits, level):
+        self.id = id
+        self.courseCode = code
         self.name = name
         self.description = description
         self.level = level
