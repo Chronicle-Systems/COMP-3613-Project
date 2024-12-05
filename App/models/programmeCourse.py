@@ -4,7 +4,7 @@ class ProgrammeCourse(db.Model):
     __tablename__ = 'programme_course'
 
     programme_id = db.Column(db.Integer, db.ForeignKey('programme.id'), primary_key=True, nullable=False)
-    course_id = db.Column(db.String(8), db.ForeignKey('course.courseCode'), primary_key=True, nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), primary_key=True, nullable=False) 
     semester_id = db.Column(db.Integer, db.ForeignKey('semester.id'), primary_key=True, nullable=False)
 
     # Relationships

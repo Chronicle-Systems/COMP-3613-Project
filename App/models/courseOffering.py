@@ -6,6 +6,7 @@ class CourseOffering(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True, nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
     semester_id = db.Column(db.Integer, db.ForeignKey('semester.id'), nullable=False)
+    clash_detected = db.Column(db.Boolean, default=False, nullable=False)  # Add this line
 
     # Relationships
     course = db.relationship("Course", back_populates="offerings")
@@ -17,9 +18,10 @@ class CourseOffering(db.Model):
         'CourseStaff', back_populates='course_offering', lazy='dynamic'
     )
 
-    def __init__(self, course_id, semester_id):
+    def __init__(self, course_id, semester_id, clash_detected=False):
         self.course_id = course_id
         self.semester_id = semester_id
+        self.clash_detected = clash_detected
 
     def __str__(self):
         return f"CourseOffering (ID={self.id}, Course ID={self.course_id}, Semester ID={self.semester_id})"
